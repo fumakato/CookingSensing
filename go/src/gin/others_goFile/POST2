@@ -1,0 +1,77 @@
+概要
+URL: https://cookpad.com/tsukurepo?id=tsukurepo_create_form&recipe_id=7464896
+URL: https://cookpad.com/tsukurepo/29169116/posted?recipe_id=7464896&rt=
+ステータス: 200
+ソース: ネットワーク
+アドレス: 52.199.53.104:443
+
+リクエスト
+GET /tsukurepo
+Referer: https://cookpad.com/tsukurepo/post?recipe_id=7464896
+Origin: https://cookpad.com
+Content-Type: application/x-www-form-urlencoded
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15
+
+応答をリダイレクト
+302
+Cache-Control: no-cache
+Location: https://cookpad.com/tsukurepo/29169116/posted?recipe_id=7464896&rt=
+Date: Tue, 07 Mar 2023 01:21:35 GMT
+Vary: User-Agent
+
+リクエスト
+:method: POST
+:scheme: https
+:authority: cookpad.com
+:path: /tsukurepo/29169116/posted?recipe_id=7464896&rt=
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Origin: https://cookpad.com
+Cookie: FVD=%7Bts+%272023-03-03+11%3A04%3A25%27%7D; _myapp_session=NHp4MEVhaWphNVYzeHFXcXJHL0ZPdXc4eTNOL0dVbzZyMGVuYk9FNWNvTi83S1Q2RitvNktxV2d3V2I1SmV6UW4rV2dDTUVoZHBWaUdPYnF1dmR1OHhpNXUyMGUwKzg5UkVUbUZLSU9Xc3ZUVG1ScjZNcWpjRkVsbjI2VjBSVFVyamY1b0d6Qk5zTi9IajVORTJTU0dWRzRMNFFjbHdpL2ROVTRBeDNsVGRNZUVxS2pQWHR1TDduZ0lENkVsb3BVLS1qbFVhcFd6M1h2VHE1Sk9CYkNBOW53PT0%3D--20ba7fa540752880160b66720a2fec8c790b7d73; has_kitchen=1; trial_type=0; user_type=1; cto_bundle=9jxkZ181ViUyRmtMZ0twU3cxTTdVQWpGZkxqVWJ5TkE3JTJGNGwlMkJGdjNSRWpjM2lYeHc5eXJ2aHNUa0N1QjkzVHJqaUhnSlc5Qm1SNDhQMHQ5clQyUjA3TTJWNWEzZzhLV1h0JTJCYVBpZEZUSW02VXlTNExDUWh1Z3h6UUpzbFNRcGpyY3VtWFg5RjNKd29pV0xWUnFrbkgzQzExJTJGQXVzJTJCMEYxdDVVYlBIeUNiczVHbGpKN0klM0Q; _ga=GA1.2.979977063.1678151073; _ga_XF5N016N1H=GS1.1.1678151073.1.1.1678152020.0.0.0; _gid=GA1.2.195292445.1678151073; LVD=1678152019; _flux_dataharbor=1; thanks_using_n_days_ago_pvs=10-0-0-0-0-0-0-0-0-0-0-0-0-0-0; LST=%7Bts+%272023-03-07+10%3A20%3A11%27%7D; lso=d; ps.pc.dish_suggestions=1; __mguid_=43cef4e1-9d1f-4495-8032-a9c52ed081fe; _ss_pp_id=43cef4e1-9d1f-4495-8032-a9c52ed081fe; adsouid=1xlZ00; balancer=598; __gads=ID=b5aefeb855f3c381-22b4eda0e7db0049:T=1678151073:RT=1678151973:S=ALNI_MaCVMGz393O4nKf5qba7BJD09dBnA; search_histories_json=%5B%22%E3%82%A2%E3%82%A4%E3%82%B9%E5%85%A5%E3%82%8A%E3%83%AF%E3%82%A4%E3%83%B3%22%5D; thanks_using_last_accessed_date=2023-03-07; sso=5634690ea3c585cf0b1e15022069ba82; PLC=33b270e%3Ac01a06c0f64a237b8b74de3fd76cd2c3ed6a9f6caf55028050bc81022256d16a2ce8f033; cpb=00bd44hq08d9d5245ca82e3ba9e55652cad32717e7d45be33j; identity_session=4a1f28f50269fa14f83c9d2ac41a2c96; v=340-3271463-9403484; __gpi=UID=00000bd321f75148:T=1678151073:RT=1678151073:S=ALNI_MZItvS9VExLazpQJJ3bU0pPvg6h1w; adblock-installed=false; bid=00bd44hq08d9d5245ca82e3ba9e55652cad32717e7d45be33j; f_unique_id=2d6979e2-f3aa-44a8-8d05-d59206730208
+Accept-Encoding: gzip, deflate, br
+Host: cookpad.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15
+Accept-Language: ja-jp
+Referer: https://cookpad.com/tsukurepo/post?recipe_id=7464896
+Connection: keep-alive
+
+レスポンス
+:status: 200
+Content-Type: text/html; charset=utf-8
+Set-Cookie: FVD=%7Bts+%272023-03-03+11%3A04%3A25%27%7D; path=/; secure; expires=Thu, 06 Apr 2023 01:21:36 GMT
+Set-Cookie: user_type=1; path=/; secure; expires=Thu, 06 Apr 2023 01:21:36 GMT
+Set-Cookie: trial_type=0; path=/; secure; expires=Thu, 06 Apr 2023 01:21:36 GMT
+Set-Cookie: has_kitchen=1; path=/; secure; expires=Thu, 06 Apr 2023 01:21:36 GMT
+Set-Cookie: _myapp_session=OUVZTEZieTR4bkxNSWZLTXhxNmNHUXg5L0VHb2FuMWVhQkxudjUyaURpajMxMURjTWR3Ui95VmFxcC9WMVVIWTdDRXVFZ21xWGlOR2prVWNMeEZuUUZnZ1ByQ3pZLzg1ZytmTm82Qy83MlNodHhOSDU2NitoajJER3pCR20yazBQWHp2QWFUMTRoMjhjVlpURlR3eFlPVWxRWUV2MGVUS01ieVJBZ3FoQ2Fkc3ltOSttM0FUVjd0MDIwRDJzVFlwLS16amJmTkJCb0ROS2FDZHBBU3owOHdBPT0%3D--f1a46c338b4afaa0a2a91a9939bf60318f48f4f6; path=/; secure; HttpOnly
+Content-Encoding: gzip
+X-XSS-Protection: 1; mode=block
+Cache-Control: max-age=0, private, must-revalidate
+Date: Tue, 07 Mar 2023 01:21:36 GMT
+X-Content-Type-Options: nosniff
+ETag: W/"bfee1542823c7994b41d9aa2dea23cfd"
+Vary: Accept-Encoding User-Agent
+X-Frame-Options: SAMEORIGIN
+x-amzn-trace-id: Root=1-6406919f-7aab90664c2737d2151d40d9;Sampled=0;Self=1-6406919f-24c641de202c498d56a4de47
+x-runtime: 0.096412
+Server: nginx
+x-request-id: 1-6406919f-7aab90664c2737d2151d40d9
+Strict-Transport-Security: max-age=31536000
+x-envoy-upstream-service-time: 101
+
+クエリー文字列パラメータ
+recipe_id: 7464896
+rt
+
+データをリクエスト
+MIMEタイプ
+データをリクエスト: 
+
+utf8=%E2%9C%93&
+authenticity_token=DlqXQENuCSSm1XwXSm%2BhnuUv9OpwXT6CsLaVaUF%2FoWXmaToyxYbgdLD7dxh1NeLdu%2FnPMGrXeY4Er2GWr2TAvQ%3D%3D&
+commit=%E5%85%AC%E9%96%8B%E3%81%99%E3%82%8B&
+sandbox=20230307012047-5a977bdf1b77a1648dac6fd197246807e779d31f&
+message=%E7%BE%8E%E5%91%B3%E3%81%97%E3%81%84%E3%81%A7%E3%81%99&
+enhance=true&
+rt=&
+ate=1678152037&
+att=1678152093

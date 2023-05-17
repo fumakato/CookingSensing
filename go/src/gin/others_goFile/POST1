@@ -1,0 +1,46 @@
+概要
+URL: https://cookpad.com/tsukurepo/post?recipe_id=7464896
+ステータス: 200
+ソース: ネットワーク
+アドレス: 52.199.53.104:443
+
+リクエスト
+:method: GET
+:scheme: https
+:authority: cookpad.com
+:path: /tsukurepo/post?recipe_id=7464896
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Cookie: cto_bundle=9jxkZ181ViUyRmtMZ0twU3cxTTdVQWpGZkxqVWJ5TkE3JTJGNGwlMkJGdjNSRWpjM2lYeHc5eXJ2aHNUa0N1QjkzVHJqaUhnSlc5Qm1SNDhQMHQ5clQyUjA3TTJWNWEzZzhLV1h0JTJCYVBpZEZUSW02VXlTNExDUWh1Z3h6UUpzbFNRcGpyY3VtWFg5RjNKd29pV0xWUnFrbkgzQzExJTJGQXVzJTJCMEYxdDVVYlBIeUNiczVHbGpKN0klM0Q; FVD=%7Bts+%272023-03-03+11%3A04%3A25%27%7D; _myapp_session=ZXVXL21RUEJlUFBkaGZwNDF6R0NBL2lBVHVYb3dQTGZLaUNVUWhDLytGSUQxdWU0NjE2ejBVQ3FEeHpVSHVNemJPekUvTWtxUUpCL1cwcWRnNGdxUFZpZ1V1VGlHTEVIKzd5VTdWbDRFd05JbkFERnZSQ0FBeXphcTRMQ2dsUnBiaXNxSGI3L25uV2t6ZlJOcFBpZ2t2OWM5bVJtZFZNL3U4em5WTXRCVmNaOFFVUUgvb2pLSlpReUEyWFQ1L2N2LS1DZDFTK3diVXh5dzloLys5RzJ4dlRRPT0%3D--1ce31a59f4ef54137aebb4f0e9ea1e633bde823d; has_kitchen=1; trial_type=0; user_type=1; _ga=GA1.2.979977063.1678151073; _ga_XF5N016N1H=GS1.1.1678151073.1.1.1678152020.0.0.0; _gid=GA1.2.195292445.1678151073; LVD=1678152019; _flux_dataharbor=1; thanks_using_n_days_ago_pvs=10-0-0-0-0-0-0-0-0-0-0-0-0-0-0; LST=%7Bts+%272023-03-07+10%3A20%3A11%27%7D; lso=d; ps.pc.dish_suggestions=1; _gat_gtag_UA_116800_1=1; __mguid_=43cef4e1-9d1f-4495-8032-a9c52ed081fe; _ss_pp_id=43cef4e1-9d1f-4495-8032-a9c52ed081fe; adsouid=1xlZ00; balancer=598; __gads=ID=b5aefeb855f3c381-22b4eda0e7db0049:T=1678151073:RT=1678151973:S=ALNI_MaCVMGz393O4nKf5qba7BJD09dBnA; search_histories_json=%5B%22%E3%82%A2%E3%82%A4%E3%82%B9%E5%85%A5%E3%82%8A%E3%83%AF%E3%82%A4%E3%83%B3%22%5D; thanks_using_last_accessed_date=2023-03-07; sso=5634690ea3c585cf0b1e15022069ba82; PLC=33b270e%3Ac01a06c0f64a237b8b74de3fd76cd2c3ed6a9f6caf55028050bc81022256d16a2ce8f033; cpb=00bd44hq08d9d5245ca82e3ba9e55652cad32717e7d45be33j; identity_session=4a1f28f50269fa14f83c9d2ac41a2c96; v=340-3271463-9403484; __gpi=UID=00000bd321f75148:T=1678151073:RT=1678151073:S=ALNI_MZItvS9VExLazpQJJ3bU0pPvg6h1w; adblock-installed=false; bid=00bd44hq08d9d5245ca82e3ba9e55652cad32717e7d45be33j; f_unique_id=2d6979e2-f3aa-44a8-8d05-d59206730208
+Accept-Encoding: gzip, deflate, br
+If-None-Match: W/"7dbc241592da045be700b55d8f59d81a"
+Host: cookpad.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15
+Accept-Language: ja-jp
+Referer: https://cookpad.com/recipe/7464896
+Connection: keep-alive
+
+レスポンス
+:status: 200
+Content-Type: text/html; charset=utf-8
+Set-Cookie: FVD=%7Bts+%272023-03-03+11%3A04%3A25%27%7D; path=/; secure; expires=Thu, 06 Apr 2023 01:20:37 GMT
+Set-Cookie: user_type=1; path=/; secure; expires=Thu, 06 Apr 2023 01:20:37 GMT
+Set-Cookie: trial_type=0; path=/; secure; expires=Thu, 06 Apr 2023 01:20:37 GMT
+Set-Cookie: has_kitchen=1; path=/; secure; expires=Thu, 06 Apr 2023 01:20:37 GMT
+Set-Cookie: _myapp_session=Z2MvK3kya000dVhYUE9IODlZL2E2WkZURm1PWkozSHJhN3FQTDZhNzZWZ05JWDVHQTdEWmpmZitZWGhxaG1EdDJ4Q2dVcHFOeldzYm96alhUY001bW13Y3NITHNFTm4rUkc3OG5SL1RwYzNsOTJjWEJodmcrbDhEODk0UWNzTUVNbW9rdVVDQkYyWGhlcnhJeVJmT1FDeXdETzVnL0NwSTNheWFJTEZkaEsrM2o5Vmtaazd1bDJBa2lLR3RiUExiLS01UnFnd0ZYWVVOZlluVWVuZEQrTUJBPT0%3D--3bdbc5df421de24ff2930b63f084e7a22fbea897; path=/; secure; HttpOnly
+Content-Encoding: gzip
+X-XSS-Protection: 1; mode=block
+Cache-Control: max-age=0, private, must-revalidate
+Date: Tue, 07 Mar 2023 01:20:37 GMT
+X-Content-Type-Options: nosniff
+ETag: W/"f28ce8fac5a2bd0dac3805b093f3a4ef"
+Vary: Accept-Encoding User-Agent
+X-Frame-Options: SAMEORIGIN
+x-amzn-trace-id: Root=1-64069165-4acaa6b12d1db4f20371df63;Sampled=0;Self=1-64069165-567e05b47b4229193aa58067
+x-runtime: 0.070196
+Server: nginx
+x-request-id: 1-64069165-4acaa6b12d1db4f20371df63
+Strict-Transport-Security: max-age=31536000
+x-envoy-upstream-service-time: 76
+
+クエリー文字列パラメータ
+recipe_id: 7464896
