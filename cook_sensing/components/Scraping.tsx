@@ -5,6 +5,7 @@ interface Response {
   img_url: string;
   message: string;
   recipe_id: string;
+  tsukurepo_id: string;
 }
 
 export const Scraping: React.FC = () => {
@@ -33,6 +34,7 @@ export const Scraping: React.FC = () => {
           <img src={item.img_url} height="200px"></img>
           <h3> message={item.message}</h3>
           <h3>recipr_id={item.recipe_id}</h3>
+          <h3>tsukurepo_id={item.tsukurepo_id}</h3>
           <div></div>
         </div>
       ))}

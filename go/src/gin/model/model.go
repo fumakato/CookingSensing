@@ -88,9 +88,10 @@ type ScrapingResultsByUser struct {
 }
 
 type TsukurepoByUser struct {
-	ImgURL   string `json:"img_url"`
-	Message  string `json:"message"`
-	RecipeID string `json:"recipe_id"`
+	ImgURL      string `json:"img_url"`
+	Message     string `json:"message"`
+	RecipeID    string `json:"recipe_id"`
+	TsukurepoID string `json:"tsukurepo_id"`
 }
 
 // type User struct {

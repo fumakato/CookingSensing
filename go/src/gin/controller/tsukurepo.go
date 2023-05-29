@@ -3,15 +3,14 @@ package controller
 import (
 	"cookSensing/model"
 	"net/http"
-	"os"
 
 	"github.com/gin-gonic/gin"
 
 	"fmt"
-	"os/exec"
-	"strings"
 
 	"log"
+
+	"time"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -27,6 +26,7 @@ func Scraping(c *gin.Context) {
 	}
 	defer res.Body.Close()
 	var recipe_id []string
+	var tsukurepo_id []string
 	var imgurl []string
 	var message []string
 	// ImgURL   string `json:"img_url"`
@@ -61,70 +61,24 @@ func Scraping(c *gin.Context) {
 			// fmt.Println("data-recipe-id:", recipeID)
 			recipe_id = append(recipe_id, recipeID)
 		}
+		tsukurepoID, ok := s.Attr("data-tsukurepo-id")
+		if ok {
+			// fmt.Println("data-recipe-id:", recipeID)
+			tsukurepo_id = append(tsukurepo_id, tsukurepoID)
+		}
 	})
+
 	i := 0
 	for i = 0; i < len(message); i++ {
 		newTsukurepoByUser := model.TsukurepoByUser{
-			ImgURL:   imgurl[i],
-			Message:  message[i],
-			RecipeID: recipe_id[i],
+			ImgURL:      imgurl[i],
+			Message:     message[i],
+			RecipeID:    recipe_id[i],
+			TsukurepoID: tsukurepo_id[i],
 		}
 		results.ScrapingResultByUser = append(results.ScrapingResultByUser, newTsukurepoByUser)
 	}
-
-	c.JSON(http.StatusOK, results)
-}
-
-func Scraping2(c *gin.Context) {
-
-	// url := c.Param("url")
-	// url := "https://cookpad.com/recipe/1438866"
-	url := "https://cookpad.com/kitchen/37779795"
-	var results model.ScrapingResults
-
-	// Pythonスクリプトのパスと引数を指定
-	cmd := exec.Command("python3", "controller/cookpad2.py", url)
-	// 標準出力をキャプチャするためのバッファを作成
-	// stdout, err := cmd.Output()
-	stdout, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println("エラー(スクレイピング):", err)
-		fmt.Println(string(stdout))
-		os.Exit(1)
-	}
-	fmt.Println("tesuto")
-	fmt.Println(string(stdout))
-	fmt.Println(stdout)
-	fmt.Println("tesuto")
-	lines := strings.Split(string(stdout), "\n")
-	i := 0
-	var tsukurepo_id []string
-	var name []string
-	var imgurl []string
-	var message []string
-	if lines[0] == "recipe" || lines[0] == "kitchen" {
-		lines = lines[1:]
-		for _, line := range lines {
-			if i%4 == 0 {
-				tsukurepo_id = append(tsukurepo_id, line)
-			} else if i%4 == 1 {
-				name = append(name, line)
-			} else if i%4 == 2 {
-				imgurl = append(imgurl, line)
-			} else if i%4 == 3 {
-				message = append(message, line)
-			}
-			i += 1
-		}
-		for i = 0; i < len(message); i++ {
-			newTsukurepo := model.Tsukurepo{
-				Id:      tsukurepo_id[i],
-				Name:    name[i],
-				ImgURL:  imgurl[i],
-				Message: message[i],
-			}
-			results.ScrapingResult = append(results.ScrapingResult, newTsukurepo)
-		}
-	}
+	fmt.Println(results)
+	time.Sleep(time.Minute * 5)
 	c.JSON(http.StatusOK, results)
 }

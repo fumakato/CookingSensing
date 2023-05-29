@@ -1,4 +1,5 @@
 //グラフ練習用
+//折れ線グラフ
 
 import React from "react";
 import {

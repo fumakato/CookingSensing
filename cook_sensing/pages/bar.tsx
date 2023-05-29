@@ -8,11 +8,12 @@ import {
   PointElement,
   LineElement,
   BarElement,
+  // PieElement,
   Title,
   Tooltip,
   Legend,
 } from "chart.js";
-import { Line, Bar } from "react-chartjs-2";
+import { Line, Bar, Pie } from "react-chartjs-2";
 import { colors } from "@material-ui/core";
 
 ChartJS.register(
@@ -21,6 +22,7 @@ ChartJS.register(
   PointElement,
   LineElement,
   BarElement,
+  // PieElement,
   Title,
   Tooltip,
   Legend
@@ -117,7 +119,7 @@ const Graph: React.FC = () => {
 
   return (
     <>
-      <Bar options={options} data={data} width={600} height={600} />
+      <Pie options={options} data={data} width={600} height={600} />
     </>
   );
 };
