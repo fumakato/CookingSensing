@@ -54,6 +54,11 @@ func main() { //ここでサーバを開いている
 		tsukurepoEngine.GET("", controller.Scraping)
 	}
 
+	certificationEngine := engine.Group("/certification")
+	{
+		certificationEngine.GET("", controller.Certification)
+	}
+
 	accEngine := engine.Group("/acc")
 	{
 		accEngine.GET("", controller.FindCutPace)                         //未実装
