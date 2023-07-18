@@ -30,8 +30,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { teal } from "@mui/material/colors";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
-// import { Histogram, RadarChart, MadeLatestRecipe } from "../components";
-import { Histogram, MadeLatestRecipe } from "../components";
+import { Histogram, RadarChart, MadeLatestRecipe } from "../components";
+// import { Histogram, MadeLatestRecipe } from "../components";
 import AspectRatio from "@mui/joy/AspectRatio";
 import { CssVarsProvider } from "@mui/joy/styles";
 import { Chart, registerables } from "chart.js";
@@ -133,7 +133,7 @@ const Home: NextPage = () => {
           m: "20px auto",
         }}
       >
-        {/* <RadarChart type={"a"} user_id="89" /> */}
+        <RadarChart type={"a"} user_id="89" />
       </Paper>
     </>
   );

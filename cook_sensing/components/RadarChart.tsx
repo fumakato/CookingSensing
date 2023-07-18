@@ -15,7 +15,7 @@ import {
   Legend,
   ChartOptions,
 } from "chart.js";
-import { Bar } from "react-chartjs-2"; //ここにも必要なものを追加
+import { Bar, Radar } from "react-chartjs-2"; //ここにも必要なものを追加
 import { Paper } from "@mui/material";
 
 ChartJS.register(
@@ -30,7 +30,7 @@ ChartJS.register(
 );
 
 //コンポーネントの呼び出し元から送られてくる型
-interface HistogramApiArg {
+interface RadarApiArg {
   user_id?: string;
   type: string;
   size?: number;
@@ -38,43 +38,32 @@ interface HistogramApiArg {
 }
 
 //apiを呼び出して返ってくる値の型
-interface HistogramGet {
+interface RadarGet {
   datas: number[];
   titles: title;
-  grade: number;
 }
 //上のtitlesの中身
 interface title {
   maintitle: string;
   mainlabel: string;
-  besidetitle: string;
-  verticaltitle: string;
-  besidelabel: string[];
+  label: string[];
 }
 
-export const Histogram = ({
+export const RadarChart = ({
   user_id = "", //値がなかった場合に入る
   type = "", //値がなかった場合に入る
   size = 30, //値がなかった場合に入る
   fontsize = 14,
-}: HistogramApiArg) => {
-  //   const setting: string[] = [];
-  //   const [apiData, setApiData] = React.useState(setting);
-  //   const [user_id_url, setUser_id_url] = React.useState(user_id);
-  const [getData, setGetData] = React.useState<HistogramGet>(); //ここにGetのデータを入れていく
+}: RadarApiArg) => {
+  const [getData, setGetData] = React.useState<RadarGet>(); //ここにGetのデータを入れていく
 
-  //   const api = axios.create({
-  //     baseURL: "http://localhost:3000/", //http://20.168.98.13:8080/
-  //     timeout: 100000,
-  //   });
   //url設定
-  const url = "http://localhost:3000/histogram/test";
+  const url = `http://localhost:3000/chart/radarchart/${user_id}`;
   const fetch = React.useMemo(async () => {
     //apiで接続
-    // const data = await axios.get<HistogramGet>(url);
-    const { data } = await axios.get<HistogramGet>(url);
+    const { data } = await axios.get<RadarGet>(url);
     //上記{data}はdataという値から取ってきているため、他の名前で宣言できないっぽい
-    console.log("de-ta->" + data.grade);
+    console.log("de-ta->" + data);
     setGetData(data);
   }, []);
 
@@ -83,7 +72,8 @@ export const Histogram = ({
   }, []);
 
   const text = getData?.titles.maintitle;
-  const options: ChartOptions<"bar"> = {
+
+  const options: ChartOptions<"radar"> = {
     responsive: true, //ここをtrueにするとサイズが可変になる。
     //サイズを変えるには呼び出すときにwidthとheightを設定してやる
     plugins: {
@@ -96,81 +86,26 @@ export const Histogram = ({
     },
     scales: {
       x: {
-        display: true,
-        title: {
-          display: true,
-          //   text: "一秒間あたりの切った回数",
-          text: getData?.titles.besidetitle,
-          font: { size: fontsize },
-        },
-        // //ラベルの関係の話
-        // ticks: {
-        //   callback: function (value: string, index: string, valuesues: string) {
-        //     return value + "回"; // 目盛の編集
-        //   },
-        // },
+        display: false,
       },
 
       y: {
-        display: true,
-        title: {
-          display: true,
-          //   text: "人数",
-          text: getData?.titles.verticaltitle,
-          font: { size: fontsize },
-        },
-        // reverse: true, //逆向きになる
-        ticks: {
-          callback(tickValue, index, ticks) {
-            return tickValue;
-            // return tickValue + "人"; // 目盛の編集
-            //tickValue:データの値に応じて変わる
-            //index:メモリの横線の数
-            //ticks:[object]がいっぱい並んでる
-          },
-        },
+        display: false,
       },
     },
   };
 
-  //背景色
-  const yellowBack = "rgba(255, 205, 86, 0.2)";
-  const redBack = "rgba(255, 99, 132, 0.2)";
-  const backGround: string[] = [];
-  var labellength = 100;
-  if (getData !== undefined) {
-    labellength = getData.titles.besidelabel.length;
-  }
-  for (var i = 0; i < labellength; i++) {
-    if (i != getData?.grade) {
-      //自分のデータの色
-      backGround.push(yellowBack);
-    } else {
-      backGround.push(redBack);
-    }
-  }
   //囲い色
-  const yellowBorder = "rgb(255, 205, 86)";
-  const redBorder = "rgb(255, 99, 132)";
-  const border: string[] = [];
-  for (var i = 0; i < labellength; i++) {
-    if (i != getData?.grade) {
-      //自分のデータの色
-      border.push(yellowBorder);
-    } else {
-      border.push(redBorder);
-    }
-  }
-  const labels = getData?.titles.besidelabel;
+  const labels = getData?.titles.label;
+
   const data = {
     labels,
     datasets: [
       {
-        label: "data", //ラベルいるか？
+        label: getData?.titles.mainlabel,
         data: getData?.datas,
-        backgroundColor: backGround,
-        borderColor: border,
-        // グラフの枠線の太さ
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderColor: "rgba(255, 99, 132, 1)",
         borderWidth: 1,
       },
     ],
@@ -189,10 +124,61 @@ export const Histogram = ({
         }}
       >
         {/* <Bar data={data} width={width} height={height} options={options} /> */}
-        <Bar data={data} width={1000} height={1000} options={options} />
+        <Radar data={data} width={1000} height={1000} options={options} />
       </Paper>
     );
   } else {
     return <></>;
   }
 };
+
+// import React from "react";
+// import {
+//   Chart as ChartJS,
+//   RadialLinearScale,
+//   PointElement,
+//   LineElement,
+//   Filler,
+//   Tooltip,
+//   Legend,
+// } from "chart.js";
+// import { Radar } from "react-chartjs-2";
+
+// ChartJS.register(
+//   RadialLinearScale,
+//   PointElement,
+//   LineElement,
+//   Filler,
+//   Tooltip,
+//   Legend
+// );
+
+// export const data = {
+//   labels: [
+//     "効率",
+//     "力の強さ",
+//     "切るはやさの速さ",
+//     "Thing 4",
+//     "Thing 5",
+//     "Thing 6",
+//   ],
+//   datasets: [
+//     {
+//       label: "# of Votes",
+//       data: [7, 8, 4, 5, 6, 3],
+//       backgroundColor: "rgba(255, 99, 132, 0.2)",
+//       borderColor: "rgba(255, 99, 132, 1)",
+//       borderWidth: 1,
+//     },
+//   ],
+// };
+
+// const options = {
+//   responsive: false,
+// };
+
+// export function App() {
+//   return <Radar data={data} options={options} width={500} height={500} />;
+// }
+
+// export default App;
