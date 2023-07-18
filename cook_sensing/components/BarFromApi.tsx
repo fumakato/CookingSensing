@@ -1,3 +1,6 @@
+//ヒストグラム表示コンポーネント
+//もう使わない
+
 import axios from "axios";
 import React from "react";
 
@@ -26,13 +29,6 @@ ChartJS.register(
   Legend
 );
 
-interface Recipe {
-  id?: string;
-  created_at?: Date;
-  update_at?: Date;
-  dish_name: string;
-}
-
 interface BarFromApiArg {
   user_id?: string;
 }
@@ -45,18 +41,7 @@ export const BarFromApi = ({ user_id = "100" }: BarFromApiArg) => {
 
   const [user_id_url, setUser_id_url] = React.useState(user_id);
 
-  const recipe: Recipe = {
-    id: "2",
-    dish_name: "カレー",
-  };
-
   const fetch = React.useMemo(async () => {
-    // const url2 = "http://localhost:3000/recipes";
-    // const response2 = await axios.put(url2, recipe);
-    // console.log("<<<<<");
-    // console.log(response2);
-    // console.log(">>>>>");
-
     //url設定
     const url = "http://localhost:3000/histogram/cut-paces";
     //apiで接続
@@ -72,14 +57,9 @@ export const BarFromApi = ({ user_id = "100" }: BarFromApiArg) => {
       }
     }
 
-    const id = "1";
+    const id = "2";
     const url2 = `http://localhost:3000/users/${id}`;
-    //apiで接続
-    // const response2 = await axios.get(url2, {
-    //   params: {
-    //     id: user_id,
-    //   },
-    // });
+
     const response2 = await axios.get(url2);
 
     console.log("res2=" + response2);
@@ -195,7 +175,7 @@ export const BarFromApi = ({ user_id = "100" }: BarFromApiArg) => {
   if (apiData !== undefined) {
     return (
       <pre>
-        <Bar data={data} width={800} height={800} options={options} />
+        <Bar data={data} width={500} height={500} options={options} />
       </pre>
     );
   } else {

@@ -29,17 +29,19 @@ func FindUsersById(c *gin.Context) {
 	// Get path pram ":id"
 	fmt.Println("byID")
 	id := c.Param("id")
+	fmt.Println(id)
 	var user model.Users
 	// Connect database
 	db := database.Connect()
 	defer db.Close()
 	// Find
 	if err := db.First(&user, "id = ?", id).Error; err != nil {
-
+		fmt.Println("見つからないよ")
 		c.String(http.StatusNotFound, "Not Found")
 		return
 	}
 	// Response
+	fmt.Println("見つかったよ")
 	c.JSON(http.StatusOK, user)
 }
 

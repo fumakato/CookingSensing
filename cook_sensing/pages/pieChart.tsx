@@ -5,11 +5,11 @@ import { Pie } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const data = {
-  labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+  labels: ["冷蔵庫", "まな板", "流し台", "コンロ", "休憩椅子"],
   datasets: [
     {
       label: "# of Votes",
-      data: [12, 19, 3, 5, 2, 3],
+      data: [40, 330, 220, 210, 105],
       backgroundColor: [
         "rgba(255, 99, 132, 0.3)",
         "rgba(54, 162, 235, 0.3)",

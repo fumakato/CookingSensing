@@ -13,6 +13,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { Histogram, RadarChart } from "../components";
 
 ChartJS.register(
   CategoryScale,
@@ -59,6 +60,9 @@ const Graph: React.FC = () => {
 
   return (
     <>
+      {/* <RadarChart type={"aa"} /> */}
+      <RadarChart type={"a"} user_id="89" />
+      <Histogram type={"aa"} size={40} fontsize={14} />
       <Line options={options} data={data} />
     </>
   );

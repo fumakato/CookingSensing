@@ -27,16 +27,16 @@ ChartJS.register(
 
 const Graph: React.FC = () => {
   const options = {
-    responsive: true,
+    responsive: false,
     plugins: {
       title: {
-        display: true,
+        // display: true,
         text: "以前までの自分との比較",
       },
     },
   };
 
-  const labels = ["1回目", "2回目", "3回目", "4回目", "5回目", "6回目"];
+  const labels = ["05/26", "05/27", "05/28", "05/29", "05/30", ""];
 
   //jsonの値をいじる
   const averagePace = [];
@@ -53,7 +53,7 @@ const Graph: React.FC = () => {
     //date,
     datasets: [
       {
-        label: "データ1",
+        label: "輪切りのペース",
         data: averagePace,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
@@ -63,7 +63,7 @@ const Graph: React.FC = () => {
 
   return (
     <>
-      <Line options={options} data={data} />
+      <Line options={options} data={data} width={500} height={500} />
     </>
   );
 };

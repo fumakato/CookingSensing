@@ -1,7 +1,7 @@
 // jsonを読み込む方法
 import React from "react";
 import { isJSDocUnknownTag } from "typescript";
-import Code from "../jsonData/cookData.json";
+import Code from "../../jsonData/cookData.json";
 
 export const ReadJson: React.FC = () => {
   /** jsonデータ編集 */

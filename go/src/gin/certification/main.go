@@ -112,9 +112,3 @@ func judgment(word string, lastResults [][]string, currentResults [][]string) bo
 	}
 	return result
 }
-
-// 1時間→七グラム
-// 750ml * 11.5 * 0.8 / 100 = 69g
-// 700ml * 5 * 0.8 /100 = 28g
-// 69g + 28g = 97g
-// 97 / 7 = 13.8571428571 約14時間

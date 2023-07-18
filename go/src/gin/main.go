@@ -57,6 +57,7 @@ func main() { //ここでサーバを開いている
 	certificationEngine := engine.Group("/certification")
 	{
 		certificationEngine.GET("", controller.Certification)
+		certificationEngine.POST("", controller.Certification)
 	}
 
 	accEngine := engine.Group("/acc")
@@ -73,6 +74,12 @@ func main() { //ここでサーバを開いている
 	{
 		histogramEngine.GET("/cut-paces", controller.FindCutPace)
 		histogramEngine.GET("", controller.FindCutPace) //未実装
+		histogramEngine.GET("/test", controller.TestHistogram)
+	}
+
+	chartEngine := engine.Group("/chart")
+	{
+		chartEngine.GET("/radarchart/:userid", controller.RadarTest)
 	}
 
 	recipesEngine := engine.Group("/recipes")

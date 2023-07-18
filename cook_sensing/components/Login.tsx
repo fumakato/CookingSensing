@@ -1,3 +1,6 @@
+//ログインのコンポーネント
+//今のところ使い道なし
+
 import React, { useState } from "react";
 
 export const Login: React.FC = () => {
