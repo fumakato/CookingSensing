@@ -187,6 +187,8 @@ export const Histogram = ({
           width: `${size}vw`,
           m: "0px auto",
         }}
+        // background-image
+        // style={{ backgroundColor: "#fafaf5" }}
       >
         {/* <Bar data={data} width={width} height={height} options={options} /> */}
         <Bar data={data} width={1000} height={1000} options={options} />

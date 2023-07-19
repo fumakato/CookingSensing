@@ -44,6 +44,7 @@ const Home: NextPage = () => {
   return (
     <>
       <MadeLatestRecipe />
+      <br></br>
       <Histogram type={"a"} fontsize={15} />
       <Grid>
         <Paper
