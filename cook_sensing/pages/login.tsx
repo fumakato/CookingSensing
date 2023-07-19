@@ -1,18 +1,3 @@
-// import React from "react";
-// import { Login } from "../components";
-// import { BarFromApi } from "../components";
-
-// const App: React.FC = () => {
-//   return (
-//     <div>
-//       <h1>My App</h1>
-//       <Login />
-//     </div>
-//   );
-// };
-
-// export default App;
-
 import {
   Avatar,
   Box,
@@ -44,99 +29,104 @@ const Home: NextPage = () => {
   return (
     <>
       <Header />
-      <MadeLatestRecipe />
-      <br></br>
-      <Histogram type={"a"} fontsize={15} />
-      <Grid>
-        <Paper
-          // elevation={0}
-          elevation={3}
-          sx={{
-            p: 4,
-            height: "70vh",
-            width: "30%",
-            m: "20px auto",
-          }}
-        >
-          <Grid
-            container
-            direction="column"
-            justifyContent="flex-start" //多分、デフォルトflex-startなので省略できる。
-            alignItems="center"
+      <Grid container spacing={0}>
+        <Grid item xs={1}></Grid>
+        <Grid item xs={5} sx={{ backgroundColor: "red" }}>
+          <MadeLatestRecipe />
+        </Grid>
+        <Grid item xs={5}>
+          {/* <Histogram type={"a"} fontsize={15} /> */}
+          <Paper
+            // elevation={0}
+            elevation={3}
+            sx={{
+              p: 4,
+              height: "70vh",
+              width: "30%",
+              m: "20px auto",
+            }}
           >
-            <Avatar sx={{ bgcolor: teal[400] }}>
-              <LockOutlinedIcon />
-            </Avatar>
+            <Grid
+              container
+              direction="column"
+              justifyContent="flex-start" //多分、デフォルトflex-startなので省略できる。
+              alignItems="center"
+            >
+              <Avatar sx={{ bgcolor: teal[400] }}>
+                <LockOutlinedIcon />
+              </Avatar>
 
-            <Typography variant={"h5"} sx={{ m: "30px" }}>
-              Sign In
-            </Typography>
-          </Grid>
-          <TextField label="Username" variant="standard" fullWidth required />
-          {/* <p>{Username}</p> */}
-          <TextField
-            type="password"
-            label="Password"
-            variant="standard"
-            fullWidth
-            required
-          />
-          {/* ラベルとチェックボックス */}
-          {/* <FormControlLabel
+              <Typography variant={"h5"} sx={{ m: "30px" }}>
+                Sign In
+              </Typography>
+            </Grid>
+            <TextField label="Username" variant="standard" fullWidth required />
+            {/* <p>{Username}</p> */}
+            <TextField
+              type="password"
+              label="Password"
+              variant="standard"
+              fullWidth
+              required
+            />
+            {/* ラベルとチェックボックス */}
+            {/* <FormControlLabel
           labelPlacement="end"
           label="パスワードを忘れました"
           control={<Checkbox name="checkboxA" size="small" color="primary" />}
         /> */}
-          <Box mt={3}>
-            <Button
-              type="submit"
-              color="primary"
-              variant="contained"
-              fullWidth
-              onClick={async () => {
-                router.push({
-                  // pathname: `/${response.data.id}`, //URL
-                  // pathname: "top",
-                  pathname: `/${userid}`,
-                  query: { moveId: userid }, //検索クエリ
-                });
-              }}
-            >
-              サインイン
-            </Button>
+            <Box mt={3}>
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                fullWidth
+                onClick={async () => {
+                  router.push({
+                    // pathname: `/${response.data.id}`, //URL
+                    // pathname: "top",
+                    pathname: `/${userid}`,
+                    query: { moveId: userid }, //検索クエリ
+                  });
+                }}
+              >
+                サインイン
+              </Button>
 
-            <Typography variant="caption">
-              <Link href="#">パスワードを忘れましたか？</Link>
-            </Typography>
-            <Typography variant="caption" display="block">
-              アカウントを持っていますか？
-              <Link href="/signUp">アカウントを作成</Link>
-            </Typography>
-          </Box>
-        </Paper>
+              <Typography variant="caption">
+                <Link href="#">パスワードを忘れましたか？</Link>
+              </Typography>
+              <Typography variant="caption" display="block">
+                アカウントを持っていますか？
+                <Link href="/signUp">アカウントを作成</Link>
+              </Typography>
+            </Box>
+          </Paper>
+          <Paper
+            elevation={3}
+            sx={{
+              p: 10,
+              height: "80vh",
+              width: "40%",
+              m: "20px auto",
+            }}
+          >
+            {/* <Histogram type={"a"} fontsize={15} /> */}
+          </Paper>
+          <Paper
+            elevation={3}
+            sx={{
+              p: 10,
+              height: "80vh",
+              width: "40%",
+              m: "20px auto",
+            }}
+          >
+            {/* <RadarChart type={"a"} user_id="89" /> */}
+          </Paper>
+        </Grid>
+        <Grid item xs={1}></Grid>
       </Grid>
-      <Paper
-        elevation={3}
-        sx={{
-          p: 10,
-          height: "80vh",
-          width: "40%",
-          m: "20px auto",
-        }}
-      >
-        {/* <Histogram type={"a"} fontsize={15} /> */}
-      </Paper>
-      <Paper
-        elevation={3}
-        sx={{
-          p: 10,
-          height: "80vh",
-          width: "40%",
-          m: "20px auto",
-        }}
-      >
-        {/* <RadarChart type={"a"} user_id="89" /> */}
-      </Paper>
     </>
   );
 };

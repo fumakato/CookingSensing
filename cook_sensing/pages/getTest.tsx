@@ -25,8 +25,7 @@ const App: React.FC = () => {
       <button
         // variant="contained"
         onClick={async () => {
-
-          // const url =`${baseurl}/users/${userid}`;
+          const url = `${baseurl}/users/${userid}`;
           axios
             .get(url)
             .then((response) => {

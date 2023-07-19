@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import * as CSS from "csstype";
+import { useRouter } from "next/router";
 
 //コンポーネントの呼び出し元から送られてくる型
 interface LatestRecipeApiArg {
@@ -42,6 +43,7 @@ export const Header = ({
   user_id = "0", //値がなかった場合に入る
 }: LatestRecipeApiArg) => {
   const [getData, setGetData] = React.useState<RecipeGet>(); //ここにGetのデータを入れていく
+  const router = useRouter();
 
   const fetch = React.useMemo(async () => {
     // setGetData(tmpdatas);
@@ -118,7 +120,20 @@ export const Header = ({
             <div></div>
           </Grid>
           <Grid item xs={1.2}>
-            <div style={headerIn}>データ投稿</div>
+            <div style={headerIn}>
+              <button
+                onClick={async () => {
+                  router.push({
+                    // pathname: `/${response.data.id}`, //URL
+                    pathname: "/123/uploadSensingData",
+                    // pathname: `/${userid}`,
+                    // query: { moveId: response.data.id }, //検索クエリ
+                  });
+                }}
+              >
+                データの送信
+              </button>
+            </div>
           </Grid>
           <Grid item xs={1.9}></Grid>
         </Grid>

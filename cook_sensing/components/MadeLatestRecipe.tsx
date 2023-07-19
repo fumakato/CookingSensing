@@ -89,7 +89,6 @@ export const MadeLatestRecipe = ({
   if (getData !== undefined) {
     return (
       <>
-        <br></br>
         {(() => {
           const items = [];
           for (let i = 0; i < getData?.recipes.length; i++) {
@@ -98,8 +97,9 @@ export const MadeLatestRecipe = ({
                 <Paper
                   sx={{
                     p: 2,
-                    m: 1,
-                    margin: "auto",
+                    // m: 1,
+                    // margin: "auto",
+                    m: "20px auto",
                     maxWidth: 500,
                     flexGrow: 1,
 
@@ -142,7 +142,6 @@ export const MadeLatestRecipe = ({
                     </Grid>
                   </Grid>
                 </Paper>
-                <br></br>
               </div>
             );
           }
