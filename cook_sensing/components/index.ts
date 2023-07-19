@@ -4,3 +4,4 @@ export * from "./Login";
 export * from "./RadarChart";
 export * from "./Histogram";
 export * from "./MadeLatestRecipe";
+export * from "./Header";

@@ -30,7 +30,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { teal } from "@mui/material/colors";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
-import { Histogram, RadarChart, MadeLatestRecipe } from "../components";
+import { Histogram, RadarChart, MadeLatestRecipe, Header } from "../components";
 // import { Histogram, MadeLatestRecipe } from "../components";
 import AspectRatio from "@mui/joy/AspectRatio";
 import { CssVarsProvider } from "@mui/joy/styles";
@@ -43,6 +43,7 @@ const Home: NextPage = () => {
   Chart.register(...registerables);
   return (
     <>
+      <Header />
       <MadeLatestRecipe />
       <br></br>
       <Histogram type={"a"} fontsize={15} />

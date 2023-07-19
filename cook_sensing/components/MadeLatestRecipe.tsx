@@ -89,6 +89,7 @@ export const MadeLatestRecipe = ({
   if (getData !== undefined) {
     return (
       <>
+        <br></br>
         {(() => {
           const items = [];
           for (let i = 0; i < getData?.recipes.length; i++) {
