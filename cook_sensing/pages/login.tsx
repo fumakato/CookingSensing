@@ -124,7 +124,7 @@ const Home: NextPage = () => {
           m: "20px auto",
         }}
       >
-        <Histogram type={"a"} fontsize={15} />
+        {/* <Histogram type={"a"} fontsize={15} /> */}
       </Paper>
       <Paper
         elevation={3}
@@ -135,7 +135,7 @@ const Home: NextPage = () => {
           m: "20px auto",
         }}
       >
-        <RadarChart type={"a"} user_id="89" />
+        {/* <RadarChart type={"a"} user_id="89" /> */}
       </Paper>
     </>
   );

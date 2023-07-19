@@ -10,6 +10,8 @@ import {
   ButtonBase,
   Box,
 } from "@mui/material";
+import SettingsIcon from "@mui/icons-material/Settings";
+import * as CSS from "csstype";
 
 //コンポーネントの呼び出し元から送られてくる型
 interface LatestRecipeApiArg {
@@ -48,49 +50,63 @@ export const Header = ({
   React.useEffect(() => {
     fetch;
   }, []);
-  const headerUp = {
+  const headerUp: CSS.Properties = {
     width: "100%",
-    height: "5vh",
+    height: "40px",
+    // height: "5vh",
     backgroundColor: "white",
     margin: "0,0,0,0",
     padding: "1vh",
-    borderBottom: "1.5px solid #eeedea",
+    borderBottom: "1.5px solid #dddbd6",
   };
 
-  const headerUnder = {
+  const headerUnder: CSS.Properties = {
     width: "100%",
-    height: "10vh",
+    height: "80px",
+    // height: "10vh",
     backgroundColor: "white",
     margin: "0,0,0,0",
     padding: "1vh",
-    borderBottom: "1.5px solid #eeedea",
+    borderBottom: "1.5px solid #dddbd6",
   };
-  const headerIn = {
+
+  const headerIn: CSS.Properties = {
+    color: "#686652",
     width: "100%",
     height: "100%",
-    backgroundColor: "red",
-    margin: "0,0,0,0",
+    backgroundColor: "red", //デバッグ用
+
+    // textAlign: "center",
+  };
+  const headerInName: CSS.Properties = {
+    color: "#686652",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "red", //デバッグ用
+    textAlign: "right",
   };
 
   return (
     <>
       <div style={headerUp}>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} alignItems="center" sx={{ height: "100%" }}>
           <Grid item xs={2}></Grid>
           <Grid item xs={3}>
             <div style={headerIn}>毎日の料理を楽しみにするために分析する</div>
           </Grid>
           <Grid item xs={4.5}>
-            <div style={headerIn}>名前(右詰)</div>
+            <div style={headerInName}>名前(右詰)</div>
           </Grid>
           <Grid item xs={0.5}>
-            <div style={headerIn}>設定</div>
+            <div style={headerIn}>
+              <SettingsIcon></SettingsIcon>
+            </div>
           </Grid>
           <Grid item xs={2}></Grid>
         </Grid>
       </div>
       <div style={headerUnder}>
-        <Grid container spacing={1}>
+        <Grid container alignItems="flex-end" spacing={1}>
           <Grid item xs={1.8}></Grid>
           <Grid item xs={2.2}>
             <div style={headerIn}>ロゴ</div>
@@ -99,7 +115,7 @@ export const Header = ({
             <div style={headerIn}>検索バー</div>
           </Grid>
           <Grid item xs={1.4}>
-            <div style={headerIn}>空白</div>
+            <div></div>
           </Grid>
           <Grid item xs={1.2}>
             <div style={headerIn}>データ投稿</div>
