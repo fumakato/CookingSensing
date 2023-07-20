@@ -37,7 +37,12 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-import { Histogram, RadarChart, Header } from "../../components";
+import {
+  Histogram,
+  RadarChart,
+  Header,
+  MadeLatestRecipe,
+} from "../../components";
 
 const UserPage: NextPage = () => {
   const router = useRouter();
@@ -45,52 +50,24 @@ const UserPage: NextPage = () => {
   return (
     <>
       <Header />
+
       <div style={{ textAlign: "center" }}>
-        <Grid container spacing={0}>
+        <Grid
+          container
+          spacing={0}
+          sx={{
+            marginTop: "2vh",
+          }}
+        >
           <Grid item xs={1}></Grid>
           <Grid item xs={5}>
-            <button
-              onClick={async () => {
-                router.push({
-                  // pathname: `/${response.data.id}`, //URL
-                  pathname: "/123/recipe",
-                  // pathname: `/${userid}`,
-                  // query: { moveId: response.data.id }, //検索クエリ
-                });
-              }}
-            >
-              過去に作ったレシピ一覧
-            </button>
-            <p></p>
-            <p></p>
-            {/* <p></p>
-      <button
-        onClick={async () => {
-          router.push({
-            // pathname: `/${response.data.id}`, //URL
-            pathname: "/123/graph",
-            // pathname: `/${userid}`,
-            // query: { moveId: response.data.id }, //検索クエリ
-          });
-        }}
-      >
-        自分のグラフ
-      </button>
-      <p></p>
-      <button
-        onClick={async () => {
-          router.push({
-            // pathname: `/${response.data.id}`, //URL
-            pathname: "/123/preference",
-            // pathname: `/${userid}`,
-            // query: { moveId: response.data.id }, //検索クエリ
-          });
-        }}
-      >
-        設定
-      </button> */}
+            <RadarChart type={"a"} user_id="89" />
+            <Histogram type={"a"} fontsize={15} />
           </Grid>
-          <Grid item xs={5}></Grid>
+          <Grid item xs={5}>
+            <MadeLatestRecipe />
+          </Grid>
+
           <Grid item xs={1}></Grid>
         </Grid>
       </div>

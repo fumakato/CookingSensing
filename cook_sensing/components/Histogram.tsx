@@ -179,19 +179,30 @@ export const Histogram = ({
   if (getData !== undefined) {
     return (
       <Paper
-        // デバッグよう。elevationは0にするとい
-        elevation={0}
         sx={{
-          p: 1,
-          height: `${size}vw`,
-          width: `${size}vw`,
-          m: "0px auto",
+          p: 2,
+          // m: 1,
+          // margin: "auto",
+          m: "10px auto",
+          maxWidth: "90%",
+          flexGrow: 1,
         }}
-        // background-image
-        // style={{ backgroundColor: "#fafaf5" }}
       >
-        {/* <Bar data={data} width={width} height={height} options={options} /> */}
-        <Bar data={data} width={1000} height={1000} options={options} />
+        <Paper
+          // デバッグよう。elevationは0にするとい
+          elevation={0}
+          sx={{
+            p: 1,
+            height: `${size}vw`,
+            width: `${size}vw`,
+            m: "0px auto",
+          }}
+          // background-image
+          // style={{ backgroundColor: "#fafaf5" }}
+        >
+          {/* <Bar data={data} width={width} height={height} options={options} /> */}
+          <Bar data={data} width={1000} height={1000} options={options} />
+        </Paper>
       </Paper>
     );
   } else {
