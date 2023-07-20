@@ -11,6 +11,7 @@ import {
   Box,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
 import * as CSS from "csstype";
 import { useRouter } from "next/router";
 
@@ -87,6 +88,17 @@ export const Header = ({
     backgroundColor: "red", //デバッグ用
     textAlign: "right",
   };
+  const headerSend: CSS.Properties = {
+    color: "#fff",
+    width: "100%",
+    height: "50px",
+    backgroundColor: "#8ca307", //デバッグ用
+    textAlign: "center",
+    paddingTop: "10px",
+    // display: "table-cell",
+    // verticalAlign: "middle",
+    borderRadius: "4px",
+  };
 
   return (
     <>
@@ -101,7 +113,16 @@ export const Header = ({
           </Grid>
           <Grid item xs={0.5}>
             <div style={headerIn}>
-              <SettingsIcon></SettingsIcon>
+              <SettingsIcon
+                onClick={async () => {
+                  router.push({
+                    // pathname: `/${response.data.id}`, //URL
+                    pathname: "/123/preference",
+                    // pathname: `/${userid}`,
+                    // query: { moveId: response.data.id }, //検索クエリ
+                  });
+                }}
+              ></SettingsIcon>
             </div>
           </Grid>
           <Grid item xs={2}></Grid>
@@ -116,23 +137,21 @@ export const Header = ({
           <Grid item xs={3.5}>
             <div style={headerIn}>検索バー</div>
           </Grid>
-          <Grid item xs={1.4}>
-            <div></div>
-          </Grid>
+          <Grid item xs={1.4}></Grid>
           <Grid item xs={1.2}>
-            <div style={headerIn}>
-              <button
-                onClick={async () => {
-                  router.push({
-                    // pathname: `/${response.data.id}`, //URL
-                    pathname: "/123/uploadSensingData",
-                    // pathname: `/${userid}`,
-                    // query: { moveId: response.data.id }, //検索クエリ
-                  });
-                }}
-              >
-                データの送信
-              </button>
+            <div
+              style={headerSend}
+              onClick={async () => {
+                router.push({
+                  // pathname: `/${response.data.id}`, //URL
+                  pathname: "/123/uploadSensingData",
+                  // pathname: `/${userid}`,
+                  // query: { moveId: response.data.id }, //検索クエリ
+                });
+              }}
+            >
+              <UploadFileIcon />
+              データを送信
             </div>
           </Grid>
           <Grid item xs={1.9}></Grid>

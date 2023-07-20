@@ -3,8 +3,16 @@
 
 import axios from "axios";
 import React from "react";
+import * as CSS from "csstype";
 
-import { Paper, Grid, styled, Typography, ButtonBase } from "@mui/material";
+import {
+  Paper,
+  Grid,
+  styled,
+  Typography,
+  ButtonBase,
+  Box,
+} from "@mui/material";
 
 //コンポーネントの呼び出し元から送られてくる型
 interface LatestRecipeApiArg {
@@ -30,6 +38,13 @@ const Img = styled("img")({
   maxWidth: "100%",
   maxHeight: "100%",
 });
+
+const recipeListButton: CSS.Properties = {
+  color: "#686652",
+  textAlign: "center",
+  // display: "table-cell",
+  // verticalAlign: "middle",
+};
 
 export const MadeLatestRecipe = ({
   user_id = "0", //値がなかった場合に入る
@@ -89,108 +104,89 @@ export const MadeLatestRecipe = ({
   if (getData !== undefined) {
     return (
       <>
-        {(() => {
-          const items = [];
-          for (let i = 0; i < getData?.recipes.length; i++) {
-            items.push(
-              <div>
-                <Paper
-                  sx={{
-                    p: 2,
-                    // m: 1,
-                    // margin: "auto",
-                    m: "20px auto",
-                    maxWidth: 500,
-                    flexGrow: 1,
+        <Paper
+          sx={{
+            p: 2,
+            // m: 1,
+            // margin: "auto",
+            m: "10px auto",
+            maxWidth: "90%",
+            flexGrow: 1,
+          }}
+        >
+          <h2 style={{ textAlign: "center" }}>最近作ったレシピ</h2>
+          {(() => {
+            const items = [];
+            for (let i = 0; i < getData?.recipes.length; i++) {
+              items.push(
+                <div>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      // m: 1,
+                      // margin: "auto",
+                      m: "10px auto",
+                      maxWidth: "95%",
+                      flexGrow: 1,
 
-                    backgroundColor: (theme) =>
-                      theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-                  }}
-                >
-                  <Grid container spacing={2}>
-                    <Grid item>
-                      <ButtonBase sx={{ width: 128, height: 128 }}>
-                        <Img alt="complex" src={getData.recipes[i].image} />
-                      </ButtonBase>
-                    </Grid>
-                    <Grid item xs={12} sm container>
-                      <Grid item xs container direction="column" spacing={2}>
-                        <Grid item xs wrap="nowrap">
-                          <Typography
-                            gutterBottom
-                            variant="subtitle1"
-                            component="div"
-                          >
-                            {getData.recipes[i].title}
-                          </Typography>
-                          <Typography variant="body2" gutterBottom>
-                            {getData.recipes[i].explanation}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            {getData.recipes[i].material}
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography
-                            // sx={{ cursor: "pointer" }}
-                            variant="body2"
-                          >
-                            by. {getData.recipes[i].author}
-                          </Typography>
+                      backgroundColor: (theme) =>
+                        theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+                    }}
+                  >
+                    <Grid container spacing={1}>
+                      <Grid item>
+                        <ButtonBase sx={{ width: 128, height: 128 }}>
+                          <Img alt="complex" src={getData.recipes[i].image} />
+                        </ButtonBase>
+                      </Grid>
+                      <Grid item xs={12} sm container>
+                        <Grid item xs container direction="column" spacing={2}>
+                          <Grid item xs wrap="nowrap">
+                            <Typography
+                              gutterBottom
+                              variant="subtitle1"
+                              component="div"
+                            >
+                              {getData.recipes[i].title}
+                            </Typography>
+                            <Typography variant="body2" gutterBottom>
+                              {getData.recipes[i].explanation}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              {getData.recipes[i].material}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Typography
+                              // sx={{ cursor: "pointer" }}
+                              variant="body2"
+                            >
+                              by. {getData.recipes[i].author}
+                            </Typography>
+                          </Grid>
                         </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                </Paper>
-              </div>
-            );
-          }
-          return <div>{items}</div>;
-        })()}
+                  </Paper>
+                </div>
+              );
+            }
+            return <div>{items}</div>;
+          })()}
 
-        {/* <Paper
-          sx={{
-            p: 2,
-            margin: "auto",
-            maxWidth: 500,
-            flexGrow: 1,
-            backgroundColor: (theme) =>
-              theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-          }}
-        >
-          <Grid container spacing={2}>
-            <Grid item>
-              <ButtonBase sx={{ width: 128, height: 128 }}>
-                <Img alt="complex" src={getData.recipes[0].image} />
-              </ButtonBase>
-            </Grid>
-            <Grid item xs={12} sm container>
-              <Grid item xs container direction="column" spacing={2}>
-                <Grid item xs>
-                  <Typography gutterBottom variant="subtitle1" component="div">
-                    {getData.recipes[0].title}
-                  </Typography>
-                  <Typography variant="body2" gutterBottom>
-                    {getData.recipes[0].explanation}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {getData.recipes[0].author}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography sx={{ cursor: "pointer" }} variant="body2">
-                    Remove
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid item>
-                <Typography variant="subtitle1" component="div">
-                  $19.00
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Paper> */}
+          <Paper
+            sx={{
+              p: 2,
+              // m: 1,
+              // margin: "auto",
+              m: "25px auto auto auto",
+              maxWidth: 500,
+              flexGrow: 1,
+            }}
+          >
+            <div style={recipeListButton}>全ての一覧を表示</div>
+          </Paper>
+        </Paper>
       </>
     );
   } else {

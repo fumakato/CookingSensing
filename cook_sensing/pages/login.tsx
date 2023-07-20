@@ -31,7 +31,8 @@ const Home: NextPage = () => {
       <Header />
       <Grid container spacing={0}>
         <Grid item xs={1}></Grid>
-        <Grid item xs={5} sx={{ backgroundColor: "red" }}>
+        {/* <Grid item xs={5} sx={{ backgroundColor: "red" }}> */}
+        <Grid item xs={5}>
           <MadeLatestRecipe />
         </Grid>
         <Grid item xs={5}>
