@@ -117,7 +117,7 @@ export const Header = ({
                 onClick={async () => {
                   router.push({
                     // pathname: `/${response.data.id}`, //URL
-                    pathname: "/123/preference",
+                    pathname: "/user/123/preference",
                     // pathname: `/${userid}`,
                     // query: { moveId: response.data.id }, //検索クエリ
                   });
@@ -144,7 +144,7 @@ export const Header = ({
               onClick={async () => {
                 router.push({
                   // pathname: `/${response.data.id}`, //URL
-                  pathname: "/123/uploadSensingData",
+                  pathname: "/user/123/uploadSensingData",
                   // pathname: `/${userid}`,
                   // query: { moveId: response.data.id }, //検索クエリ
                 });

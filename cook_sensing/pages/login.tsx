@@ -77,7 +77,7 @@ const Home: NextPage = () => {
               router.push({
                 // pathname: `/${response.data.id}`, //URL
                 // pathname: "top",
-                pathname: `/${userid}`,
+                pathname: `/user/${userid}`,
                 query: { moveId: userid }, //検索クエリ
               });
             }}

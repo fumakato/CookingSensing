@@ -6,3 +6,4 @@ export * from "./Histogram";
 export * from "./MadeLatestRecipe";
 export * from "./Header";
 export * from "./RecipeDetail";
+export * from "./RecipeSmall";

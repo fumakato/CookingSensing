@@ -14,6 +14,8 @@ import {
   Box,
 } from "@mui/material";
 
+import { RecipeSmall } from "./";
+
 //コンポーネントの呼び出し元から送られてくる型
 interface LatestRecipeApiArg {
   user_id?: string;
@@ -104,88 +106,77 @@ export const RecipeDetail = ({
   if (getData !== undefined) {
     return (
       <>
+        <h2 style={{ textAlign: "center" }}>最近作ったレシピ</h2>
+        {(() => {
+          const items = [];
+          for (let i = 0; i < getData?.recipes.length; i++) {
+            items.push(
+              <div>
+                <Paper
+                  sx={{
+                    p: 2,
+                    // m: 1,
+                    // margin: "auto",
+                    m: "10px auto",
+                    maxWidth: "95%",
+                    flexGrow: 1,
+
+                    backgroundColor: (theme) =>
+                      theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+                  }}
+                >
+                  <Grid container spacing={1}>
+                    <Grid item>
+                      <ButtonBase sx={{ width: 128, height: 128 }}>
+                        <Img alt="complex" src={getData.recipes[i].image} />
+                      </ButtonBase>
+                    </Grid>
+                    <Grid item xs={12} sm container>
+                      <Grid item xs container direction="column" spacing={2}>
+                        <Grid item xs wrap="nowrap">
+                          <Typography
+                            gutterBottom
+                            variant="subtitle1"
+                            component="div"
+                          >
+                            {getData.recipes[i].title}
+                          </Typography>
+                          <Typography variant="body2" gutterBottom>
+                            {getData.recipes[i].explanation}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {getData.recipes[i].material}
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <Typography
+                            // sx={{ cursor: "pointer" }}
+                            variant="body2"
+                          >
+                            by. {getData.recipes[i].author}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Paper>
+              </div>
+            );
+          }
+          return <div>{items}</div>;
+        })()}
+
         <Paper
           sx={{
             p: 2,
             // m: 1,
             // margin: "auto",
-            m: "10px auto",
-            maxWidth: "90%",
+            m: "25px auto auto auto",
+            maxWidth: 500,
             flexGrow: 1,
           }}
         >
-          <h2 style={{ textAlign: "center" }}>最近作ったレシピ</h2>
-          {(() => {
-            const items = [];
-            for (let i = 0; i < getData?.recipes.length; i++) {
-              items.push(
-                <div>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      // m: 1,
-                      // margin: "auto",
-                      m: "10px auto",
-                      maxWidth: "95%",
-                      flexGrow: 1,
-
-                      backgroundColor: (theme) =>
-                        theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-                    }}
-                  >
-                    <Grid container spacing={1}>
-                      <Grid item>
-                        <ButtonBase sx={{ width: 128, height: 128 }}>
-                          <Img alt="complex" src={getData.recipes[i].image} />
-                        </ButtonBase>
-                      </Grid>
-                      <Grid item xs={12} sm container>
-                        <Grid item xs container direction="column" spacing={2}>
-                          <Grid item xs wrap="nowrap">
-                            <Typography
-                              gutterBottom
-                              variant="subtitle1"
-                              component="div"
-                            >
-                              {getData.recipes[i].title}
-                            </Typography>
-                            <Typography variant="body2" gutterBottom>
-                              {getData.recipes[i].explanation}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                              {getData.recipes[i].material}
-                            </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Typography
-                              // sx={{ cursor: "pointer" }}
-                              variant="body2"
-                            >
-                              by. {getData.recipes[i].author}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Paper>
-                </div>
-              );
-            }
-            return <div>{items}</div>;
-          })()}
-
-          <Paper
-            sx={{
-              p: 2,
-              // m: 1,
-              // margin: "auto",
-              m: "25px auto auto auto",
-              maxWidth: 500,
-              flexGrow: 1,
-            }}
-          >
-            <div style={recipeListButton}>全ての一覧を表示</div>
-          </Paper>
+          <div style={recipeListButton}>全ての一覧を表示</div>
         </Paper>
       </>
     );

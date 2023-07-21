@@ -42,7 +42,7 @@ import {
   RadarChart,
   Header,
   MadeLatestRecipe,
-} from "../../components";
+} from "../../../components";
 
 const UserPage: NextPage = () => {
   const router = useRouter();
@@ -60,7 +60,18 @@ const UserPage: NextPage = () => {
           }}
         >
           <Grid item xs={1}></Grid>
-          <Grid item xs={5}>
+          <Grid
+            item
+            xs={5}
+            onClick={async () => {
+              router.push({
+                // pathname: `/${response.data.id}`, //URL
+                pathname: "123/graph",
+                // pathname: `/${userid}`,
+                // query: { moveId: response.data.id }, //検索クエリ
+              });
+            }}
+          >
             <RadarChart type={"a"} user_id="89" />
             <Histogram type={"a"} fontsize={15} />
           </Grid>
