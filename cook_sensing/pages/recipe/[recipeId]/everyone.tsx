@@ -2,7 +2,7 @@
 import React from "react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { BarFromApi, Header } from "../../../components";
+import { Header } from "../../../components";
 
 const EveryonePage: NextPage = () => {
   const router = useRouter();

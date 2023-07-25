@@ -1,6 +1,5 @@
 import React from "react";
-import { Scraping } from "../components";
-import { BarFromApi } from "../components";
+import { Header, Scraping } from "../components";
 const App: React.FC = () => {
   return (
     <div>

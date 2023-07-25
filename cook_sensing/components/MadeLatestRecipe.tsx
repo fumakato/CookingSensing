@@ -13,6 +13,8 @@ import {
   ButtonBase,
   Box,
 } from "@mui/material";
+import { RecipeSmall } from "./";
+import { useRouter } from "next/router";
 
 //コンポーネントの呼び出し元から送られてくる型
 interface LatestRecipeApiArg {
@@ -45,11 +47,41 @@ const recipeListButton: CSS.Properties = {
   // display: "table-cell",
   // verticalAlign: "middle",
 };
+const tmpdata1: Recipe = {
+  title: "うちのカレー",
+  explanation: "家で作ってたカレーです",
+  author: "ゴリラ",
+  material:
+    "パルメザンチーズ、ズッキーニ、にら、らっきょう、ういろう、うづらのたまご、ごま",
+  image:
+    "https://img.cpcdn.com/recipes/7543426/894x1461s/03789cbf29381cf7fa6857ee07177ee1?u=52069349&p=1689583076",
+};
+const tmpdata2: Recipe = {
+  title: "こだわりのラーメン",
+  explanation: "道で拾いました",
+  author: "切らず",
+  material: "材料",
+  image:
+    "https://img.cpcdn.com/recipes/7578996/894x1461s/6460200f56dc605f2bde42ce2d1b33a2?u=8645521&p=1689419516",
+};
+const tmpdata3: Recipe = {
+  title: "トントンかつ",
+  explanation: "fooooooo",
+  author: "紫陽花",
+  material: "材料",
+  image:
+    "https://img.cpcdn.com/recipes/7574224/894x1461s/8c44d33cde03f21a38acfe162a0401ef?u=41499908&p=1688871936",
+};
+
+const tmpdatas: RecipeGet = {
+  recipes: [tmpdata1, tmpdata2, tmpdata3],
+};
 
 export const MadeLatestRecipe = ({
   user_id = "0", //値がなかった場合に入る
 }: LatestRecipeApiArg) => {
   const [getData, setGetData] = React.useState<RecipeGet>(); //ここにGetのデータを入れていく
+  const router = useRouter();
 
   //   const url = `http://localhost:3000/recipe/latest/${user_id}`;
   //   const fetch = React.useMemo(async () => {
@@ -63,35 +95,6 @@ export const MadeLatestRecipe = ({
   //   }, []);
 
   //   const text = getData?.recipes[0].title;
-  const tmpdata1: Recipe = {
-    title: "うちのカレー",
-    explanation: "家で作ってたカレーです",
-    author: "ゴリラ",
-    material:
-      "パルメザンチーズ、ズッキーニ、にら、らっきょう、ういろう、うづらのたまご、ごま",
-    image:
-      "https://img.cpcdn.com/recipes/7543426/894x1461s/03789cbf29381cf7fa6857ee07177ee1?u=52069349&p=1689583076",
-  };
-  const tmpdata2: Recipe = {
-    title: "こだわりのラーメン",
-    explanation: "道で拾いました",
-    author: "切らず",
-    material: "材料",
-    image:
-      "https://img.cpcdn.com/recipes/7578996/894x1461s/6460200f56dc605f2bde42ce2d1b33a2?u=8645521&p=1689419516",
-  };
-  const tmpdata3: Recipe = {
-    title: "トントンかつ",
-    explanation: "fooooooo",
-    author: "紫陽花",
-    material: "材料",
-    image:
-      "https://img.cpcdn.com/recipes/7574224/894x1461s/8c44d33cde03f21a38acfe162a0401ef?u=41499908&p=1688871936",
-  };
-
-  const tmpdatas: RecipeGet = {
-    recipes: [tmpdata1, tmpdata2, tmpdata3],
-  };
 
   const fetch = React.useMemo(async () => {
     setGetData(tmpdatas);
@@ -120,54 +123,7 @@ export const MadeLatestRecipe = ({
             for (let i = 0; i < getData?.recipes.length; i++) {
               items.push(
                 <div>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      // m: 1,
-                      // margin: "auto",
-                      m: "10px auto",
-                      maxWidth: "95%",
-                      flexGrow: 1,
-
-                      backgroundColor: (theme) =>
-                        theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-                    }}
-                  >
-                    <Grid container spacing={1}>
-                      <Grid item>
-                        <ButtonBase sx={{ width: 128, height: 128 }}>
-                          <Img alt="complex" src={getData.recipes[i].image} />
-                        </ButtonBase>
-                      </Grid>
-                      <Grid item xs={12} sm container>
-                        <Grid item xs container direction="column" spacing={2}>
-                          <Grid item xs wrap="nowrap">
-                            <Typography
-                              gutterBottom
-                              variant="subtitle1"
-                              component="div"
-                            >
-                              {getData.recipes[i].title}
-                            </Typography>
-                            <Typography variant="body2" gutterBottom>
-                              {getData.recipes[i].explanation}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                              {getData.recipes[i].material}
-                            </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Typography
-                              // sx={{ cursor: "pointer" }}
-                              variant="body2"
-                            >
-                              by. {getData.recipes[i].author}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Paper>
+                  <RecipeSmall recipe={getData.recipes[i]} />
                 </div>
               );
             }
@@ -182,6 +138,14 @@ export const MadeLatestRecipe = ({
               m: "25px auto auto auto",
               maxWidth: 500,
               flexGrow: 1,
+            }}
+            onClick={async () => {
+              router.push({
+                // pathname: `/${response.data.id}`, //URL
+                pathname: "/recipe",
+                // pathname: `/${userid}`,
+                // query: { moveId: response.data.id }, //検索クエリ
+              });
             }}
           >
             <div style={recipeListButton}>全ての一覧を表示</div>

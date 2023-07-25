@@ -72,7 +72,7 @@ const UserPage: NextPage = () => {
               });
             }}
           >
-            <RadarChart type={"a"} user_id="89" />
+            <RadarChart type="a" user_id="89" />
             <Histogram type={"a"} fontsize={15} />
           </Grid>
           <Grid item xs={5}>

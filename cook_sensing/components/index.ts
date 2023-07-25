@@ -1,9 +1,9 @@
-export * from "./BarFromApi";
+// export * from "./Sandbox/BarFromApi";
 export * from "./Scraping";
-export * from "./Login";
+// export * from "./Login";
 export * from "./RadarChart";
 export * from "./Histogram";
 export * from "./MadeLatestRecipe";
 export * from "./Header";
-export * from "./RecipeDetail";
+// export * from "./RecipeDetail";
 export * from "./RecipeSmall";

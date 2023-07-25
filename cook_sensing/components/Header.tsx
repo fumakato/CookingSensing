@@ -14,6 +14,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import * as CSS from "csstype";
 import { useRouter } from "next/router";
+import logo from "../images/cookteck.png";
+import Image from "next/image";
 
 //コンポーネントの呼び出し元から送られてくる型
 interface LatestRecipeApiArg {
@@ -77,7 +79,7 @@ export const Header = ({
     color: "#686652",
     width: "100%",
     height: "100%",
-    backgroundColor: "red", //デバッグ用
+    // backgroundColor: "red", //デバッグ用
 
     // textAlign: "center",
   };
@@ -85,7 +87,7 @@ export const Header = ({
     color: "#686652",
     width: "100%",
     height: "100%",
-    backgroundColor: "red", //デバッグ用
+    // backgroundColor: "red", //デバッグ用
     textAlign: "right",
   };
   const headerSend: CSS.Properties = {
@@ -99,6 +101,7 @@ export const Header = ({
     // verticalAlign: "middle",
     borderRadius: "4px",
   };
+  const name = "ふーま";
 
   return (
     <>
@@ -109,7 +112,7 @@ export const Header = ({
             <div style={headerIn}>毎日の料理を楽しみにするために分析する</div>
           </Grid>
           <Grid item xs={4.5}>
-            <div style={headerInName}>名前(右詰)</div>
+            <div style={headerInName}>{name}</div>
           </Grid>
           <Grid item xs={0.5}>
             <div style={headerIn}>
@@ -129,13 +132,16 @@ export const Header = ({
         </Grid>
       </div>
       <div style={headerUnder}>
-        <Grid container alignItems="flex-end" spacing={1}>
+        <Grid container alignItems="center" spacing={1}>
           <Grid item xs={1.8}></Grid>
           <Grid item xs={2.2}>
-            <div style={headerIn}>ロゴ</div>
+            <div>
+              {/* <div style={headerIn}> */}
+              <Image src={logo} alt="LogoImage" width={220} />
+            </div>
           </Grid>
           <Grid item xs={3.5}>
-            <div style={headerIn}>検索バー</div>
+            {/* <div style={headerIn}>検索バー</div> */}
           </Grid>
           <Grid item xs={1.4}></Grid>
           <Grid item xs={1.2}>
@@ -157,7 +163,6 @@ export const Header = ({
           <Grid item xs={1.9}></Grid>
         </Grid>
       </div>
-      {/*  */}
     </>
   );
 };

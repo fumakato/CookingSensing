@@ -14,8 +14,6 @@ import {
   Box,
 } from "@mui/material";
 
-import { RecipeSmall } from "./";
-
 //コンポーネントの呼び出し元から送られてくる型
 interface LatestRecipeApiArg {
   user_id?: string;
@@ -165,7 +163,6 @@ export const RecipeDetail = ({
           }
           return <div>{items}</div>;
         })()}
-
         <Paper
           sx={{
             p: 2,

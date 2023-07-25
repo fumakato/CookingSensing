@@ -61,8 +61,8 @@ const Graph: React.FC = () => {
   return (
     <>
       {/* <RadarChart type={"aa"} /> */}
-      <RadarChart type={"a"} user_id="89" />
-      <Histogram type={"aa"} size={40} fontsize={14} />
+      {/* <RadarChart type={"a"} user_id="89" />
+      <Histogram type={"aa"} size={40} fontsize={14} /> */}
       <Line options={options} data={data} />
     </>
   );
