@@ -13,7 +13,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
-import Code from "../jsonData/cookData.json";
+import Code from "../../jsonData/cookData.json";
 
 ChartJS.register(
   CategoryScale,

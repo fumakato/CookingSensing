@@ -63,7 +63,7 @@ const DetailPage: NextPage = () => {
               </Grid>
 
               <p></p>
-              <h2>[あかちゃんぶ]さんの成績</h2>
+              <h2>[コックさん]さんの成績</h2>
               <RadarChart type="a" user_id="989" />
               <Histogram type="a" />
               <p

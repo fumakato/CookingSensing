@@ -137,7 +137,19 @@ export const Header = ({
           <Grid item xs={2.2}>
             <div>
               {/* <div style={headerIn}> */}
-              <Image src={logo} alt="LogoImage" width={220} />
+              <Image
+                src={logo}
+                alt="LogoImage"
+                width={220}
+                onClick={async () => {
+                  router.push({
+                    // pathname: `/${response.data.id}`, //URL
+                    pathname: "/user/123",
+                    // pathname: `/${userid}`,
+                    // query: { moveId: response.data.id }, //検索クエリ
+                  });
+                }}
+              />
             </div>
           </Grid>
           <Grid item xs={3.5}>

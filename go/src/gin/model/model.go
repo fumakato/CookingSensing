@@ -10,14 +10,140 @@ import (
 )
 
 type Users struct {
-	Id                 string    `json:"id"`
-	CreatedAt          time.Time `json:"created_at"`
-	UpdatedAt          time.Time `json:"updated_at"`
-	Mail               string    `json:"mail"`
-	Name               string    `json:"name"`
-	Pass               string    `json:"pass"`
-	BestCutAveragePace string    `json:"best_cut_average_pace"`
+	//ginではuserというテーブルにアクセスするときに自動的にusersを探してしまう。
+	//そのためmysqlのテーブル名はusersにする必要がある
+	UserId      int       `json:"user_id"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at" `
+	Name        string    `json:"name"`
+	Image       string    `json:"image"`
+	HistogramId int       `json:"histogram_id"`
+	RadarId     int       `json:"radar_id"`
+	LineId      int       `json:"line_id"`
 }
+
+// UserId      int       `json:"user_id" gorm:"primaryKey;not null"`
+// CreatedAt   time.Time `json:"created_at" gorm:"default:CURRENT_TIMESTAMP"`
+// UpdatedAt   time.Time `json:"updated_at" gorm:autoUpdateTime`
+// Name        string    `json:"name" gorm:"not null"`
+
+type ChartDatas struct {
+	DataId    int       `json:"data_id"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	LabelId   int       `json:"label_id"`
+	Data1     float32   `json:"data1"`
+	Data2     float32   `json:"data2"`
+	Data3     float32   `json:"data3"`
+	Data4     float32   `json:"data4"`
+	Data5     float32   `json:"data5"`
+	Data6     float32   `json:"data6"`
+	Data7     float32   `json:"data7"`
+	Data8     float32   `json:"data8"`
+	Data9     float32   `json:"data9"`
+	Data10    float32   `json:"data10"`
+	Data11    float32   `json:"data11"`
+	Data12    float32   `json:"data12"`
+	Data13    float32   `json:"data13"`
+	Data14    float32   `json:"data14"`
+	Data15    float32   `json:"data15"`
+	Data16    float32   `json:"data16"`
+	Data17    float32   `json:"data17"`
+	Data18    float32   `json:"data18"`
+	Data19    float32   `json:"data19"`
+	Data20    float32   `json:"data20"`
+}
+
+type HistogramLabels struct {
+	HistogramId    int       `json:"histogram"`
+	CreatedAt      time.Time `json:"created_at"`
+	UpdatedAt      time.Time `json:"updated_at"`
+	Type           string    `json:"type"`
+	MainTitle      string    `json:"main_title"`
+	MainLabel      string    `json:"main_label"`
+	BesideTitle    string    `json:"beside"`
+	VerticalTitle  string    `json:"vert"`
+	BesideLabelNum int       `json:"beside_label_num"`
+	BesideLabel1   string    `json:"beside_label1"`
+	BesideLabel2   string    `json:"beside_label2"`
+	BesideLabel3   string    `json:"beside_label3"`
+	BesideLabel4   string    `json:"beside_label4"`
+	BesideLabel5   string    `json:"beside_label5"`
+	BesideLabel6   string    `json:"beside_label6"`
+	BesideLabel7   string    `json:"beside_label7"`
+	BesideLabel8   string    `json:"beside_label8"`
+	BesideLabel9   string    `json:"beside_label9"`
+	BesideLabel10  string    `json:"beside_label10"`
+	BesideLabel11  string    `json:"beside_label11"`
+	BesideLabel12  string    `json:"beside_label12"`
+	BesideLabel13  string    `json:"beside_label13"`
+	BesideLabel14  string    `json:"beside_label14"`
+	BesideLabel15  string    `json:"beside_label15"`
+	BesideLabel16  string    `json:"beside_label16"`
+	BesideLabel17  string    `json:"beside_label17"`
+	BesideLabel18  string    `json:"beside_label18"`
+	BesideLabel19  string    `json:"beside_label19"`
+	BesideLabel20  string    `json:"beside_label20"`
+}
+
+type RadarLabels struct {
+	RadarId   int       `json:"radar_id"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	Type      string    `json:"type"`
+	MainTitle string    `json:"main_title"`
+	MainLabel string    `json:"main_label"`
+	LabelNum  int       `json:"label_num"`
+	Label1    string    `json:"label1"`
+	Label2    string    `json:"label2"`
+	Label3    string    `json:"label3"`
+	Label4    string    `json:"label4"`
+	Label5    string    `json:"label5"`
+	Label6    string    `json:"label6"`
+	Label7    string    `json:"label7"`
+	Label8    string    `json:"label8"`
+	Label9    string    `json:"label9"`
+	Label10   string    `json:"label10"`
+	Label11   string    `json:"label11"`
+	Label12   string    `json:"label12"`
+	Label13   string    `json:"label13"`
+	Label14   string    `json:"label14"`
+	Label15   string    `json:"label15"`
+	Label16   string    `json:"label16"`
+	Label17   string    `json:"label17"`
+	Label18   string    `json:"label18"`
+	Label19   string    `json:"label19"`
+	Label20   string    `json:"label20"`
+}
+
+type Recipes struct {
+	RecipeId    string    `json:"recipe_id"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+	Title       string    `json:"title"`
+	Explanation string    `json:"explanation"`
+	Material    string    `json:"Material"`
+	Author      string    `json:"author"`
+	Image       string    `json:"image"`
+}
+
+type Tsukurepos struct {
+	Tsukurepo_Id string    `json:"id"`
+	CreatedAt    time.Time `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
+	Comment      string    `json:"comment"`
+	Image        string    `json:"image"`
+	UserId       int       `json:"user_id"`
+	HistogramId  int       `json:"histogram_id"`
+	RadarId      int       `json:"radius_id"`
+}
+
+// type Recipes struct {
+// 	Id        string    `json:"id"`
+// 	DishName  string    `json:"dish_name"`
+// 	CreatedAt time.Time `json:"created_at"`
+// 	UpdatedAt time.Time `json:"updated_at"`
+// }
 
 type UsersRecipesAccs struct {
 	Id             string    `json:"id"`
@@ -26,13 +152,6 @@ type UsersRecipesAccs struct {
 	CreatedAt      time.Time `json:"created_at"`
 	UpdatedAt      time.Time `json:"updated_at"`
 	CutAveragePace string    `json:"cut_average_pace"`
-}
-
-type Recipes struct {
-	Id        string    `json:"id"`
-	DishName  string    `json:"dish_name"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
 }
 
 type Acc struct {
@@ -72,16 +191,9 @@ type HistogramCutPaces struct {
 	CutTimes_50_   string    `json:"cut_times_50_"`
 }
 
-type ScrapingResults struct {
-	ScrapingResult []Tsukurepo `json:"scraping_result"`
-}
-
-type Tsukurepo struct {
-	Id      string `json:"id"`
-	Name    string `json:"name"`
-	ImgURL  string `json:"img_url"`
-	Message string `json:"message"`
-}
+// type ScrapingResults struct {
+// 	ScrapingResult []Tsukurepo `json:"scraping_result"`
+// }
 
 type ScrapingResultsByUser struct {
 	ScrapingResultByUser []TsukurepoByUser `json:"scraping_result_by_user"`
@@ -181,3 +293,13 @@ type TsukurepoByUser struct {
 // type TrueResponse struct {
 // 	Status bool `json:"status"`
 // }
+
+//	type Users struct {
+//		Id                 string    `json:"id"`
+//		CreatedAt          time.Time `json:"created_at"`
+//		UpdatedAt          time.Time `json:"updated_at"`
+//		Mail               string    `json:"mail"`
+//		Name               string    `json:"name"`
+//		Pass               string    `json:"pass"`
+//		BestCutAveragePace string    `json:"best_cut_average_pace"`
+//	}

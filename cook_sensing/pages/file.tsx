@@ -16,7 +16,7 @@ const Graph: React.FC = () => {
     }
   };
 
-  const apiUrl = "aa";
+  const apiUrl = "http://localhost:3000/users";
 
   const onClickSubmit = async () => {
     if (!file) {
@@ -27,7 +27,7 @@ const Graph: React.FC = () => {
     console.log(formData);
 
     await axios
-      .post(`${apiUrl}/api/upload`, formData)
+      .post(`${apiUrl}/uploads`, formData)
       .then((res) => {
         console.log(res.data);
       })

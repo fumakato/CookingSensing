@@ -52,15 +52,15 @@ const Home: NextPage = () => {
             Sign In
           </Typography>
         </Grid>
-        <TextField label="Username" variant="standard" fullWidth required />
+        <TextField label="user_id" variant="standard" fullWidth required />
         {/* <p>{Username}</p> */}
-        <TextField
+        {/* <TextField
           type="password"
           label="Password"
           variant="standard"
           fullWidth
           required
-        />
+        /> */}
         {/* ラベルとチェックボックス */}
         {/* <FormControlLabel
           labelPlacement="end"

@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Param } from "../types";
+import { Param } from "../../types";
 import sha512 from "js-sha512";
 import
 const App: React.FC = () => {

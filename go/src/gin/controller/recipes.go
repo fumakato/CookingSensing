@@ -28,9 +28,23 @@ func CreateRecipe(c *gin.Context) {
 	c.JSON(http.StatusCreated, recipe)
 }
 
-//先頭一致
-//これはREACT側でやるべきかも
-//  https://cookpad.com/recipe/   これと一致しているがどうか
+// 先頭一致
+// これはREACT側でやるべきかも
+//
+//	https://cookpad.com/recipe/   これと一致しているがどうか
+//
 // var s = "https://cookpad.com/recipe/3883935"
 // fmt.Println(strings.HasPrefix(s, "https://cookpad.com/recipe/")) // -> true
 // fmt.Println(s[26:])
+func FindRecipes(c *gin.Context) {
+
+}
+func FindRecipesById(c *gin.Context) {
+
+}
+func CreateRecipes(c *gin.Context) {
+
+}
+func UpdateRecipesById(c *gin.Context) {
+
+}

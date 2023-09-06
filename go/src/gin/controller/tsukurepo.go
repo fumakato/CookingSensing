@@ -15,8 +15,22 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
+func FindTsukurepos(c *gin.Context) {
+
+}
+func FindTsukureposById(c *gin.Context) {
+
+}
+func CreateTsukurepos(c *gin.Context) {
+
+}
+func UpdateTsukureposById(c *gin.Context) {
+
+}
+
 const url = "https://ja.wikipedia.org/wiki/SCADA"
 
+// スクレイピングについて。もう忘れてるや😜
 func Scraping(c *gin.Context) {
 	var results model.ScrapingResultsByUser
 	// var result model.TsukurepoByUser

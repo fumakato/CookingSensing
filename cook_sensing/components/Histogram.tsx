@@ -41,7 +41,7 @@ interface HistogramApiArg {
 interface HistogramGet {
   datas: number[];
   titles: title;
-  grade: number;
+  grade: number; //ユーザのグレード
 }
 //上のtitlesの中身
 interface title {

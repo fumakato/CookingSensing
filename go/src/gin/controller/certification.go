@@ -15,7 +15,7 @@ type QueryParams struct {
 	Word   string `json:"word"`
 }
 
-func CarTeat(c *gin.Context) {
+func CarTeat(c *gin.Context) { //なんこれ？
 	fmt.Println("CarTeat")
 	var queryParams QueryParams
 	if err := c.BindJSON(&queryParams); err != nil {

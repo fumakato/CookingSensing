@@ -16,11 +16,16 @@ func connectDatabase() { //データベースとの接続。データベース�
 	defer db.Close()
 	// // database.DeleteAll(db)
 	// //上の一文は多分全部消すやつだからコメントアウトしなきゃダメ
-	database.Migrate(db)
-	database.ShowUsers(db)
-	database.ShowRecipes(db)
-	database.ShowUsersRecipesAccs(db)
-	database.ShowHistogramCutPaces(db)
+	// database.Migrate(db)
+	database.ShowUser(db)
+	// database.ShowRecipes(db)
+	// database.ShowUsersRecipesAccs(db)
+	// database.ShowHistogramCutPaces(db)
+	database.ShowChartData(db)
+	database.ShowHistogramLabel(db)
+	database.ShowRadarLabel(db)
+	database.ShowRecipe(db)
+	database.ShowTsukurepo(db)
 }
 
 func main() { //ここでサーバを開いている
@@ -40,7 +45,8 @@ func main() { //ここでサーバを開いている
 		usersEngine.GET("/:id", controller.FindUsersById)
 		usersEngine.GET("", controller.FindUsers)
 		usersEngine.POST("", controller.CreateUsers) //未実装
-		usersEngine.GET("/login", controller.Login)  //未実装
+
+		usersEngine.POST("/uploads", controller.DataUpload)
 
 		// usersEngine.GET("", func(c *gin.Context) {
 		// 	c.JSON(http.StatusOK, gin.H{

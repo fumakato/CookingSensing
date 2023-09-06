@@ -19,7 +19,7 @@ func Connect() (database *gorm.DB) {
 	USER := "root"
 	PASS := "rootcooksensing"
 	PROTOCOL := "tcp(localhost:3306)"
-	DB_NAME := "cookSensing"
+	DB_NAME := "cook_sensing"
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DB_NAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
 	if db, err := gorm.Open(DBMS, CONNECT); err != nil {
 		panic(err.Error())
@@ -54,55 +54,112 @@ func GetDateNow() time.Time {
 // マイグレートをする。データベースの操作に必要になるらしい
 func Migrate(db *gorm.DB) {
 	db.AutoMigrate(&model.Users{})
-	db.AutoMigrate(&model.UsersRecipesAccs{})
-	db.AutoMigrate(&model.Recipes{})
+	// db.AutoMigrate(&model.UsersRecipesAccs{})
+	// db.AutoMigrate(&model.Recipes{})
 	//db.AutoMigrate(&model.Acc{})
-	db.AutoMigrate(&model.HistogramCutPaces{})
+	// db.AutoMigrate(&model.HistogramCutPaces{})
+	db.AutoMigrate(&model.Users{})
+
 }
 
-func ShowUsers(db *gorm.DB) {
-	users := []*model.Users{}
-	if err := db.Find(&users).Error; err != nil {
+func ShowUser(db *gorm.DB) {
+	user := []*model.Users{}
+	if err := db.Find(&user).Error; err != nil {
 		return
 	}
-	fmt.Println("=== users ===")
-	for _, user := range users {
-		fmt.Println(user)
+	fmt.Println("=== user ===")
+	for _, user_one := range user {
+		fmt.Println(user_one)
 	}
 }
 
-func ShowUsersRecipesAccs(db *gorm.DB) {
-	usersAcc := []*model.UsersRecipesAccs{}
-	if err := db.Find(&usersAcc).Error; err != nil {
-		return
-	}
-	fmt.Println("=== users_recipes_accs ===")
-	for _, usersacc := range usersAcc {
-		fmt.Println(usersacc)
-	}
-}
-
-func ShowRecipes(db *gorm.DB) {
-	recipes := []*model.Recipes{}
-	if err := db.Find(&recipes).Error; err != nil {
-		return
-	}
-	fmt.Println("=== recipes ===")
-	for _, recipe := range recipes {
-		fmt.Println(recipe)
-	}
-}
-
-func ShowHistogramCutPaces(db *gorm.DB) {
-	datas := []*model.HistogramCutPaces{}
+func ShowChartData(db *gorm.DB) {
+	datas := []*model.ChartDatas{}
 	if err := db.Find(&datas).Error; err != nil {
 		return
 	}
-	fmt.Println("=== histogram_cut_paces ===")
+	fmt.Println("=== chart_data ===")
 	for _, data := range datas {
 		fmt.Println(data)
 	}
 }
+
+func ShowHistogramLabel(db *gorm.DB) {
+	datas := []*model.HistogramLabels{}
+	if err := db.Find(&datas).Error; err != nil {
+		return
+	}
+	fmt.Println("=== histogram_label ===")
+	for _, data := range datas {
+		fmt.Println(data)
+	}
+}
+
+func ShowRadarLabel(db *gorm.DB) {
+	datas := []*model.RadarLabels{}
+	if err := db.Find(&datas).Error; err != nil {
+		return
+	}
+	fmt.Println("=== radar_label ===")
+	for _, data := range datas {
+		fmt.Println(data)
+	}
+}
+
+func ShowRecipe(db *gorm.DB) {
+	datas := []*model.Recipes{}
+	if err := db.Find(&datas).Error; err != nil {
+		return
+	}
+	fmt.Println("=== recipe ===")
+	for _, data := range datas {
+		fmt.Println(data)
+	}
+}
+
+func ShowTsukurepo(db *gorm.DB) {
+	datas := []*model.Tsukurepos{}
+	if err := db.Find(&datas).Error; err != nil {
+		return
+	}
+	fmt.Println("=== tsukurepo ===")
+	for _, data := range datas {
+		fmt.Println(data)
+	}
+}
+
+// func ShowUsersRecipesAccs(db *gorm.DB) {
+// 	usersAcc := []*model.UsersRecipesAccs{}
+// 	if err := db.Find(&usersAcc).Error; err != nil {
+// 		return
+// 	}
+// 	fmt.Println("=== users_recipes_accs ===")
+// 	for _, usersacc := range usersAcc {
+// 		fmt.Println(usersacc)
+// 	}
+// }
+
+// func ShowRecipes(db *gorm.DB) {
+// 	recipes := []*model.Recipes{}
+// 	if err := db.Find(&recipes).Error; err != nil {
+// 		return
+// 	}
+// 	fmt.Println("=== recipes ===")
+// 	for _, recipe := range recipes {
+// 		fmt.Println(recipe)
+// 	}
+// }
+
+// func ShowHistogramCutPaces(db *gorm.DB) {
+// 	datas := []*model.HistogramCutPaces{}
+// 	if err := db.Find(&datas).Error; err != nil {
+// 		return
+// 	}
+// 	fmt.Println("=== histogram_cut_paces ===")
+// 	for _, data := range datas {
+// 		fmt.Println(data)
+// 	}
+// }
 
 // func ShowCoordinate(db *gorm.DB) {
 // 	coordinates := []*model.Coordinate{}

@@ -85,12 +85,26 @@ export const RadarChart = ({
       },
     },
     scales: {
-      x: {
-        display: false,
-      },
-
-      y: {
-        display: false,
+      // x: {
+      //   display: false,
+      // },
+      // y: {
+      //   display: false,
+      // },
+      // ticks: { beginAtZero: true }, //なんかエラーだからできない
+      r: {
+        pointLabels: {
+          // color: "black",
+          font: {
+            size: fontsize,
+          },
+        },
+        suggestedMin: 0,
+        suggestedMax: 10,
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1,
+        },
       },
     },
   };
@@ -108,6 +122,13 @@ export const RadarChart = ({
         borderColor: "rgba(255, 99, 132, 1)",
         borderWidth: 1,
       },
+      // {
+      //   label: getData?.titles.mainlabel,
+      //   data: [8, 9, 8, 7],
+      //   backgroundColor: "rgba(30, 60, 30, 0.2)",
+      //   borderColor: "rgba(60, 120, 60, 1)",
+      //   borderWidth: 1,
+      // },
     ],
   };
 
@@ -133,7 +154,6 @@ export const RadarChart = ({
             m: "0px auto",
           }}
         >
-          {/* <Bar data={data} width={width} height={height} options={options} /> */}
           <Radar data={data} width={1000} height={1000} options={options} />
         </Paper>
       </Paper>

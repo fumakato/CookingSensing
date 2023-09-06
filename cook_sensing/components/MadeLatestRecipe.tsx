@@ -57,12 +57,12 @@ const tmpdata1: Recipe = {
     "https://img.cpcdn.com/recipes/7543426/894x1461s/03789cbf29381cf7fa6857ee07177ee1?u=52069349&p=1689583076",
 };
 const tmpdata2: Recipe = {
-  title: "こだわりのラーメン",
-  explanation: "道で拾いました",
-  author: "切らず",
-  material: "材料",
+  title: "きのこの煮込みハンバーグ",
+  explanation: "ケチャップとウスターソースでかんたん煮込み",
+  author: "✞✟✞おこめ✟✞✟",
+  material: "玉ねぎ",
   image:
-    "https://img.cpcdn.com/recipes/7578996/894x1461s/6460200f56dc605f2bde42ce2d1b33a2?u=8645521&p=1689419516",
+    "https://img.cpcdn.com/recipes/7568811/m/926d7ee2bbbad58e16a2d124c28bbadd?u=14685394&p=1688220140",
 };
 const tmpdata3: Recipe = {
   title: "トントンかつ",
