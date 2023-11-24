@@ -37,6 +37,26 @@ func TestHistogram(c *gin.Context) {
 	fmt.Println(testtitle)
 	c.JSON(http.StatusOK, histogram)
 }
+func FindHistogram(c *gin.Context) {
+	// Get path pram ":id"
+	fmt.Println("FindHistogram")
+	id := c.Param("id")
+	fmt.Println("id=「" + id + "」")
+	var user model.Users
+	// Connect database
+	db := database.Connect()
+	defer db.Close()
+	// Find
+	// if err := db.First(&user, "id = ?", id).Error; err != nil {
+	if err := db.First(&user, "user_id = ?", id).Error; err != nil {
+		fmt.Println("見つかりません")
+		c.String(http.StatusNotFound, "Not Found")
+		return
+	}
+	// Response
+	fmt.Println("見つかりました")
+	c.JSON(http.StatusOK, user)
+}
 
 func FindCutPace(c *gin.Context) {
 	// Get path pram ":id"

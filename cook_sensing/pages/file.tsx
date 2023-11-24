@@ -6,6 +6,12 @@
 import React, { useState } from "react";
 import axios, { AxiosError } from "axios";
 
+interface CsvData {
+  user_id: number;
+  recipe_id: number;
+  csv_file: FormData;
+}
+
 const Graph: React.FC = () => {
   const [file, setFile] = React.useState<File | null>(null);
 
@@ -26,8 +32,14 @@ const Graph: React.FC = () => {
     formData.append("file", file);
     console.log(formData);
 
+    const postData: CsvData = {
+      user_id: 123456789,
+      recipe_id: 987654321,
+      csv_file: formData,
+    };
+
     await axios
-      .post(`${apiUrl}/uploads`, formData)
+      .post(`${apiUrl}/uploads`, postData)
       .then((res) => {
         console.log(res.data);
       })
@@ -43,7 +55,7 @@ const Graph: React.FC = () => {
           <input
             name="file"
             type="file"
-            accept="*.scv"
+            accept="*.csv"
             onChange={onChangeFile}
           />
           <input

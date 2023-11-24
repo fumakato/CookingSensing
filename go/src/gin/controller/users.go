@@ -23,6 +23,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// 全ユーザの一覧検索(多分使わん)
 func FindUsers(c *gin.Context) {
 	fmt.Println("FindUsers")
 	var user []model.Users
@@ -36,6 +37,7 @@ func FindUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
+// ユーザをIDで検索
 func FindUsersById(c *gin.Context) {
 	// Get path pram ":id"
 	fmt.Println("FindUsersById")
@@ -46,7 +48,8 @@ func FindUsersById(c *gin.Context) {
 	db := database.Connect()
 	defer db.Close()
 	// Find
-	if err := db.First(&user, "id = ?", id).Error; err != nil {
+	// if err := db.First(&user, "id = ?", id).Error; err != nil {
+	if err := db.First(&user, "user_id = ?", id).Error; err != nil {
 		fmt.Println("見つかりません")
 		c.String(http.StatusNotFound, "Not Found")
 		return
@@ -56,11 +59,38 @@ func FindUsersById(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
+func FindUsersByUid(c *gin.Context) {
+	// Get path pram ":id"
+	fmt.Println("FindUsersByUid")
+	id := c.Param("uid")
+	fmt.Println("id=「" + id + "」")
+
+	userid := 54208270
+
+	// var user model.Users
+	// // Connect database
+	// db := database.Connect()
+	// defer db.Close()
+	// // Find
+	// // if err := db.First(&user, "id = ?", id).Error; err != nil {
+	// if err := db.First(&user, "user_id = ?", id).Error; err != nil {
+	// 	fmt.Println("見つかりません")
+	// 	c.String(http.StatusNotFound, "Not Found")
+	// 	return
+	// }
+	// // Response
+	// fmt.Println("見つかりました")
+	c.JSON(http.StatusOK, userid)
+}
+
+// ユーザの登録
 func CreateUsers(c *gin.Context) {
+	fmt.Println("user 登録のPOST")
 	var user model.Users //ここでuserの実体化
-	// Validation Check
+
 	if err := c.BindJSON(&user); err != nil { //引数からuserの方に入れる。入れれるかのチェックもしてる
 		c.String(http.StatusBadRequest, "Bad request")
+		fmt.Println("型が違う可能性あり。エラー内容:", err) // エラー内容をコンソールに表示
 		return
 	}
 	// Connect database
@@ -70,28 +100,32 @@ func CreateUsers(c *gin.Context) {
 	//上みたいな感じに入力すれば特定の値を変えて登録ができる
 	if err := db.Create(&user).Error; err != nil {
 		c.String(http.StatusBadRequest, "Bad request")
+		fmt.Println("DBに登録する際にエラーが発生。エラー内容:", err)
 		return
 	}
 	// Response
 	c.JSON(http.StatusCreated, user)
+	fmt.Println("登録完了")
 }
 
+// アップデートのやつ
 func UpdateUsersById(c *gin.Context) {
-	// Get path pram ":id"
-	id := c.Param("id")
-	idint, _ := strconv.Atoi(id)
-	var user model.Users
+	fmt.Println("PUTの関数")
+
+	var updateUser model.Users
 	// Validation Check
-	if err := c.BindJSON(&user); err != nil {
+	if err := c.BindJSON(&updateUser); err != nil {
+		fmt.Println("POSTパラメータの取得失敗")
 		c.String(http.StatusBadRequest, "Bad request")
 		return
 	}
 	// Connect database
 	db := database.Connect()
 	defer db.Close()
-	// Update coordinate
-	user.UserId = idint
-	if err := db.Save(&user).Error; err != nil { //Saveってので更新をしていると思われる
+
+	var user model.Users
+
+	if err := db.Model(&user).First("user_id = ?", updateUser.UserId).Update(updateUser).Error; err != nil {
 		c.String(http.StatusBadRequest, "Bad request")
 		return
 	}
@@ -99,6 +133,7 @@ func UpdateUsersById(c *gin.Context) {
 	c.JSON(http.StatusCreated, user)
 }
 
+// 生データをアップロードするならこれかなー
 func DataUpload(c *gin.Context) {
 
 	exe, err := os.Executable()
@@ -111,8 +146,10 @@ func DataUpload(c *gin.Context) {
 	dir := filepath.Dir(exe)
 
 	fmt.Println("実行場所:", dir)
-	// フォームからファイルを取得します
+	// 🔴🔴フォームからファイルを取得します
 	file, header, err := c.Request.FormFile("file")
+
+	// file, header, err := c.
 	if err != nil {
 		c.String(400, fmt.Sprintf("ファイルの取得エラー: %s", err.Error()))
 		return

@@ -11,9 +11,16 @@ import (
 
 func main() {
 	//セットアップ
+
+	//
+
+	//  ↓入力する言葉↓
+	word := "美味しくできました！"
+
+	//
+	//
+
 	userID := "54208270"
-	//userID := "54177797"
-	word := "作ってみましたー"
 	scrapingResults := scraping(userID)
 	ch := make(chan bool)
 	fmt.Println("セットアップ完了")
@@ -30,7 +37,7 @@ func main() {
 		// タイムアウト時の処理
 		fmt.Println("5分経ちました。タイムアウトです")
 	case <-ch:
-		fmt.Println("終了条件を達成しました")
+		fmt.Println("本人確認に成功しました")
 	}
 
 	// タイマーを停止

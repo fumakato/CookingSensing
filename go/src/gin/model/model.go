@@ -138,6 +138,12 @@ type Tsukurepos struct {
 	RadarId      int       `json:"radius_id"`
 }
 
+type CsvDatas struct {
+	UserId   int    `json:"user_id"`
+	RecipeId int    `json:"recipe_id"`
+	CsvFile  string `json:"csv_file"`
+}
+
 // type Recipes struct {
 // 	Id        string    `json:"id"`
 // 	DishName  string    `json:"dish_name"`

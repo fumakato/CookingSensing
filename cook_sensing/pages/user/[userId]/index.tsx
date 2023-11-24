@@ -47,6 +47,12 @@ import {
 const UserPage: NextPage = () => {
   const router = useRouter();
 
+  //パスパラメータを取り出す方法2種
+  // const { query } = router;
+  // const moveId = query.moveId;
+  //or
+  // const moveId = router.query.moveId;
+
   return (
     <>
       <Header />
@@ -66,9 +72,9 @@ const UserPage: NextPage = () => {
             onClick={async () => {
               router.push({
                 // pathname: `/${response.data.id}`, //URL
-                pathname: "123/graph",
-                // pathname: `/${userid}`,
-                // query: { moveId: response.data.id }, //検索クエリ
+                // pathname: "123/graph",
+                pathname: `${router.query.moveId}/graph`,
+                query: { moveId: router.query.moveId }, //検索クエリ
               });
             }}
           >

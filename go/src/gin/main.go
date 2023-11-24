@@ -42,11 +42,15 @@ func main() { //ここでサーバを開いている
 
 	usersEngine := engine.Group("/users")
 	{
-		usersEngine.GET("/:id", controller.FindUsersById)
+		usersEngine.GET(":id", controller.FindUsersById)
+		usersEngine.GET("/login/:uid", controller.FindUsersByUid)
 		usersEngine.GET("", controller.FindUsers)
+
 		usersEngine.POST("", controller.CreateUsers) //未実装
 
 		usersEngine.POST("/uploads", controller.DataUpload)
+
+		usersEngine.PUT("", controller.UpdateUsersById)
 
 		// usersEngine.GET("", func(c *gin.Context) {
 		// 	c.JSON(http.StatusOK, gin.H{
@@ -64,6 +68,7 @@ func main() { //ここでサーバを開いている
 	{
 		certificationEngine.GET("", controller.Certification)
 		certificationEngine.POST("", controller.Certification)
+		certificationEngine.GET("/id/:id", controller.ScrapingByID)
 	}
 
 	accEngine := engine.Group("/acc")

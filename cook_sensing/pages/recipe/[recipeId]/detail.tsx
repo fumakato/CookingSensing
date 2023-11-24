@@ -3,7 +3,12 @@ import React from "react";
 import { Paper, Grid } from "@mui/material";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { Header, Histogram, RadarChart } from "../../../components";
+import {
+  Header,
+  Histogram,
+  RadarChart,
+  RadarChartDemo2,
+} from "../../../components";
 
 const DetailPage: NextPage = () => {
   const router = useRouter();
@@ -32,7 +37,7 @@ const DetailPage: NextPage = () => {
               }}
             >
               <h1 style={{ textAlign: "left", marginBottom: "50px" }}>
-                きのこの煮込みハンバーグ by ✞✟✞おこめ✟✞✟
+                きのこの煮込みハンバーグ by おこめ
               </h1>
               <Grid container spacing={0}>
                 <Grid item xs={5.5}>
@@ -44,7 +49,7 @@ const DetailPage: NextPage = () => {
                 <Grid item xs={6.5}>
                   <p>ケチャップとウスターソースでかんたん煮込み</p>
                   <br></br>
-                  <p>🟡mitomito(username)</p>
+                  {/* <p>🟡mitomito(username)</p> */}
                   <h3>材料 (1~2人分)</h3>
                   <p>玉ねぎ</p>
                   <p>【ハンバーグの具材】合い挽きミンチ</p>
@@ -58,13 +63,17 @@ const DetailPage: NextPage = () => {
                   <p>★ウスターソース</p>
                   <p>★砂糖</p>
                   <p>★コンソメ</p>
-                  <h3>詳しいレシピはこちら</h3>
+
+                  <a href="https://cookpad.com/recipe/7568811" target="_blank">
+                    <h3>詳しいレシピはこちら</h3>
+                  </a>
                 </Grid>
               </Grid>
 
               <p></p>
-              <h2>[コックさん]さんの成績</h2>
-              <RadarChart type="a" user_id="989" />
+              <h2>ふーま さんの成績</h2>
+              {/* <RadarChart type="a" user_id="989" /> */}
+              <RadarChartDemo2 type="a" user_id="989" />
               <Histogram type="a" />
               <p
                 onClick={async () => {

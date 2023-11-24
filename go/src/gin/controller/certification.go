@@ -149,3 +149,86 @@ func judgment(word string, lastResults [][]string, currentResults [][]string) bo
 	}
 	return result
 }
+
+func ScrapingByID(c *gin.Context) {
+	fmt.Println("スクレイピングByID")
+	userID := c.Param("id")
+	// res, err := http.Get("https://cookpad.com/tsukurepo/list/54208270")
+	res, err := http.Get("https://cookpad.com/tsukurepo/list/" + userID)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer res.Body.Close()
+	var message []string
+	var tsukurepo_id []string
+	var tsukurepo_image []string
+	var recipe_image []string
+	var recipe_title []string
+	var date []string
+
+	doc, err := goquery.NewDocumentFromReader(res.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	doc.Find(".message.tsukurepo-message").Each(func(i int, s *goquery.Selection) {
+		message = append(message, s.Text())
+	})
+	doc.Find(".tsukurepo-recipe-wrapper.recipe-title").Each(func(i int, s *goquery.Selection) {
+		tsukurepoID, ok := s.Attr("data-tsukurepo-id")
+		if ok {
+			tsukurepo_id = append(tsukurepo_id, tsukurepoID)
+		}
+	})
+	doc.Find(".tsukurepo-recipe-title").Each(func(i int, s *goquery.Selection) {
+		recipe_title = append(recipe_title, s.Text())
+	})
+	doc.Find(".tsukurepo-post-date").Each(func(i int, s *goquery.Selection) {
+		date = append(date, s.Text())
+	})
+	doc.Find("img.tsukurepo-recipe-image").Each(func(i int, s *goquery.Selection) {
+		recipe_image = append(recipe_image, s.AttrOr("src", ""))
+	})
+	doc.Find("img.tsukurepo-image.large_photo_clickable").Each(func(i int, s *goquery.Selection) {
+		tsukurepo_image = append(tsukurepo_image, s.AttrOr("src", ""))
+	})
+	fmt.Println("date")
+	fmt.Println(date)
+	fmt.Println("recipe_title")
+	fmt.Println(recipe_title)
+	fmt.Println("recipe_image")
+	fmt.Println(recipe_image)
+	fmt.Println("tsukurepo_id")
+	fmt.Println(tsukurepo_id)
+	fmt.Println("tsukurepo_image")
+	fmt.Println(tsukurepo_image)
+
+	type Scraping struct {
+		Date           string `json:"date"`
+		Message        string `json:"message"`
+		TsukurepoId    string `json:"tsukurepo_id"`
+		TsukurepoImage string `json:"tsukurepo_image"`
+		RecipeImage    string `json:"recipe_image"`
+		RecipeTitle    string `json:"recipe_title"`
+	}
+	var scrapingResults []Scraping
+	for i := 0; i < len(date); i++ {
+		data := Scraping{
+			Date:           date[i],
+			Message:        message[i],
+			TsukurepoId:    tsukurepo_id[i],
+			TsukurepoImage: tsukurepo_image[i],
+			RecipeImage:    recipe_image[i],
+			RecipeTitle:    recipe_title[i],
+		}
+		scrapingResults = append(scrapingResults, data)
+	}
+	fmt.Println(scrapingResults)
+	c.JSON(http.StatusOK, scrapingResults)
+}
+
+// var user model.Users //ここでuserの実体化
+// 	if err := c.BindJSON(&user); err != nil { //引数からuserの方に入れる。入れれるかのチェックもしてる
+// 		c.String(http.StatusBadRequest, "Bad request")
+// 		fmt.Println("型が違う可能性あり。エラー内容:", err) // エラー内容をコンソールに表示
+// 		return
+// 	}

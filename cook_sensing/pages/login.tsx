@@ -20,21 +20,82 @@ import { Histogram, RadarChart, MadeLatestRecipe, Header } from "../components";
 import AspectRatio from "@mui/joy/AspectRatio";
 import { CssVarsProvider } from "@mui/joy/styles";
 import { Chart, registerables } from "chart.js";
+import React, { useState, ChangeEvent, useEffect } from "react";
+
+import {
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  User as FireUser,
+  signOut,
+} from "firebase/auth";
+import { auth } from "./firebase/FirebaseConfig";
+import axios, { AxiosError } from "axios";
 
 const Home: NextPage = () => {
   // export const Login = () => {
   const router = useRouter();
-  const userid = "123";
-  Chart.register(...registerables);
+  const apiUrl = "http://localhost:3000";
+  const [errorMessage, setErrorMessage] = useState("");
+  const [mail, setMail] = useState("");
+  const [pass, setPass] = useState("");
+
+  // TextFieldの値が変更されたときのハンドラ
+  const handleChangeMail = (event: ChangeEvent<HTMLInputElement>) => {
+    setMail(event.target.value);
+  };
+  const handleChangePass = (event: ChangeEvent<HTMLInputElement>) => {
+    setPass(event.target.value);
+  };
+
+  //firebaseへのログイン
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await signInWithEmailAndPassword(auth, mail, pass);
+    } catch (error) {
+      alert("メールアドレスまたはパスワードが間違っています");
+    }
+  };
+
+  const [fireuser, setFireUser] = useState<FireUser | null>(null);
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setFireUser(currentUser);
+    });
+  });
+
+  if (fireuser) {
+    axios
+      .get(`${apiUrl}/users/login/${fireuser.uid}`)
+      .then((res) => {
+        console.log("res -> " + res.data);
+        router.push(`/user/${res.data}`);
+        // signOut(auth);
+      })
+      .catch((e: AxiosError) => {
+        console.error(e);
+        signOut(auth);
+      });
+
+    // router.push("/firebase/Mypage");
+  }
+
+  // ↓これなんだ？
+  // Chart.register(...registerables);
   return (
     <>
+      <h1>{fireuser?.email}</h1>
+      <h1>{fireuser?.uid}</h1>
       <Paper
         // elevation={0}
         elevation={3}
         sx={{
           p: 4,
+          // height: "70vh",
+          // width: "30%",
           height: "70vh",
-          width: "30%",
+          width: "50vh",
           m: "20px auto",
         }}
       >
@@ -52,42 +113,49 @@ const Home: NextPage = () => {
             Sign In
           </Typography>
         </Grid>
-        <TextField label="user_id" variant="standard" fullWidth required />
-        {/* <p>{Username}</p> */}
-        {/* <TextField
+
+        <TextField
+          type="mail"
+          label="mail"
+          variant="standard"
+          value={mail}
+          fullWidth
+          required
+          onChange={handleChangeMail}
+        />
+        <TextField
           type="password"
           label="Password"
           variant="standard"
+          value={pass}
           fullWidth
           required
-        /> */}
-        {/* ラベルとチェックボックス */}
-        {/* <FormControlLabel
-          labelPlacement="end"
-          label="パスワードを忘れました"
-          control={<Checkbox name="checkboxA" size="small" color="primary" />}
-        /> */}
+          onChange={handleChangePass}
+        />
+
+        {/* 🔴 */}
         <Box mt={3}>
           <Button
             type="submit"
             color="primary"
             variant="contained"
             fullWidth
-            onClick={async () => {
-              router.push({
-                // pathname: `/${response.data.id}`, //URL
-                // pathname: "top",
-                pathname: `/user/${userid}`,
-                query: { moveId: userid }, //検索クエリ
-              });
-            }}
+            // onClick={async () => {
+            //   router.push({
+            //     // pathname: `/${response.data.id}`, //URL
+            //     pathname: `/user/${mail}`, //ここにはIDが入る予定
+            //     query: { moveId: mail }, //検索クエリ
+            //   });
+            // }}
+            onClick={handleSubmit}
           >
             サインイン
           </Button>
 
-          <Typography variant="caption">
+          {/* <Typography variant="caption">
             <Link href="#">パスワードを忘れましたか？</Link>
-          </Typography>
+          </Typography> */}
+
           <Typography variant="caption" display="block">
             アカウントを持っていますか？
             <Link href="/signUp">アカウントを作成</Link>

@@ -4,6 +4,6 @@ import (
 	"fmt"
 )
 
-func routines() {
-	fmt.Println("実行場所の取得に失敗しました:")
+func routines(filename string) {
+	fmt.Println("ここではゴルーチンについて書く")
 }
