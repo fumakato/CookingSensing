@@ -63,7 +63,7 @@ func Certification(c *gin.Context) {
 	case <-timer.C:
 		// タイムアウト時の処理
 		fmt.Println("5分経ちました。タイムアウトです")
-		c.JSON(http.StatusOK, true)
+		c.JSON(http.StatusOK, false)
 		// c.String(http.StatusNotFound, "Not Found")
 	case <-ch:
 		fmt.Println("終了条件を達成しました")

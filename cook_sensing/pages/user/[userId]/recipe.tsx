@@ -8,6 +8,7 @@ const UserRecipePage: NextPage = () => {
   const router = useRouter();
 
   return (
+    
     <div style={{ textAlign: "center" }}>
       <p>〇〇さんの作ったレシピ</p>
       <p>1.</p>

@@ -8,3 +8,4 @@ export * from "./MadeLatestRecipe";
 export * from "./Header";
 // export * from "./RecipeDetail";
 export * from "./RecipeSmall";
+export * from "./TsukurepoLatestList";

@@ -38,6 +38,7 @@ const Home: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [mail, setMail] = useState("");
   const [pass, setPass] = useState("");
+  const [fireuser, setFireUser] = useState<FireUser | null>(null);
 
   // TextFieldの値が変更されたときのハンドラ
   const handleChangeMail = (event: ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +59,6 @@ const Home: NextPage = () => {
     }
   };
 
-  const [fireuser, setFireUser] = useState<FireUser | null>(null);
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setFireUser(currentUser);
@@ -94,9 +94,9 @@ const Home: NextPage = () => {
           p: 4,
           // height: "70vh",
           // width: "30%",
-          height: "70vh",
-          width: "50vh",
-          m: "20px auto",
+          height: "auto",
+          width: "50vw",
+          m: "auto auto",
         }}
       >
         <Grid
@@ -105,9 +105,9 @@ const Home: NextPage = () => {
           justifyContent="flex-start" //多分、デフォルトflex-startなので省略できる。
           alignItems="center"
         >
-          <Avatar sx={{ bgcolor: teal[400] }}>
-            <LockOutlinedIcon />
-          </Avatar>
+          {/* <Avatar sx={{ bgcolor: teal[400] }}> */}
+          <LockOutlinedIcon />
+          {/* </Avatar> */}
 
           <Typography variant={"h5"} sx={{ m: "30px" }}>
             Sign In
@@ -116,7 +116,7 @@ const Home: NextPage = () => {
 
         <TextField
           type="mail"
-          label="mail"
+          label="メールアドレス"
           variant="standard"
           value={mail}
           fullWidth
@@ -125,7 +125,7 @@ const Home: NextPage = () => {
         />
         <TextField
           type="password"
-          label="Password"
+          label="パスワード"
           variant="standard"
           value={pass}
           fullWidth
@@ -140,6 +140,7 @@ const Home: NextPage = () => {
             color="primary"
             variant="contained"
             fullWidth
+            sx={{ marginBottom: "10%" }}
             // onClick={async () => {
             //   router.push({
             //     // pathname: `/${response.data.id}`, //URL
@@ -152,13 +153,9 @@ const Home: NextPage = () => {
             サインイン
           </Button>
 
-          {/* <Typography variant="caption">
-            <Link href="#">パスワードを忘れましたか？</Link>
-          </Typography> */}
-
           <Typography variant="caption" display="block">
-            アカウントを持っていますか？
-            <Link href="/signUp">アカウントを作成</Link>
+            アカウントを持っていない方はこちら→
+            <Link href="/signUp">サインアップ</Link>
           </Typography>
         </Box>
       </Paper>

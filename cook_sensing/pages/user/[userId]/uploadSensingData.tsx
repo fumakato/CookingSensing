@@ -1,27 +1,24 @@
 //uploadページ
-import React, { useState, useEffect } from "react";
+import React, { ChangeEvent, useState, useEffect } from "react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { Header } from "../../../components";
+import { Header, TsukurepoLatestList } from "../../../components";
 import { onAuthStateChanged, User as FireUser, signOut } from "firebase/auth";
 import { auth } from "../../firebase/FirebaseConfig";
 import axios, { AxiosError } from "axios";
 
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
 
 interface TsukurepoPost {
   user_id: number;
-  tsukurepo_id: number;
-  csv_file: FormData;
+  tsukurepo_id: string;
+  // csv_file: FormData;
 }
 interface TsukurepoReturn {
   date: string;
   message: string;
-  tsukurepo_id: number;
+  tsukurepo_id: string;
   tsukurepo_image: string;
   recipe_image: string;
   recipe_title: string;
@@ -34,7 +31,7 @@ const UploadPage: NextPage = () => {
   const [tsukurepo, setTsukurepo] = useState<TsukurepoReturn[] | null>(null);
   const apiUrl = "http://localhost:3000";
 
-  const [radioValue, setRadioValue] = React.useState();
+  const [radioValue, setRadioValue] = React.useState("");
   const [file, setFile] = React.useState<File | null>(null);
 
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +39,11 @@ const UploadPage: NextPage = () => {
     if (files && files[0]) {
       setFile(files[0]);
     }
+  };
+
+  const handleChildValue = (valueFromChild: string) => {
+    // console.log(valueFromChild); // 子コンポーネントからの値
+    setRadioValue(valueFromChild);
   };
 
   const onClickSubmit = async () => {
@@ -58,7 +60,7 @@ const UploadPage: NextPage = () => {
     const postData: TsukurepoPost = {
       user_id: Number(userId),
       tsukurepo_id: radioValue,
-      csv_file: formData,
+      // csv_file: formData,
     };
 
     await axios
@@ -117,53 +119,39 @@ const UploadPage: NextPage = () => {
   //6. POST成功失敗はalartでお知らせ
   //7. メインページに戻る
 
-  const handleChange = (event) => {
-    setRadioValue(event.target.value);
-  };
-
   return (
     <>
       <Header />
-      {/* <p>ここはデータのアップロード画面</p>
-      <p>ここは7月中に作ろう</p>
-      <p>{fireuser?.uid}</p>
-      <p>{userId}</p>
-      <p>{tsukurepo}</p>
-      <p>{tsukurepo.length}</p>
-      <p>ラジオボタン{radioValue}</p> */}
-
-      {tsukurepo ? (
-        <>
-          <FormControl component="fieldset">
-            <FormLabel component="legend">つくれぽを選択してください</FormLabel>
-            <RadioGroup
-              aria-label="gender"
-              name="gender1"
-              value={radioValue}
-              onChange={handleChange}
+      <Container maxWidth="lg">
+        {tsukurepo ? (
+          <>
+            <Typography
+              variant="body1"
+              display="block"
+              sx={{ margin: "3% 1% 1.5% 3%" }}
+              // margin: top right bottom left;
             >
-              {tsukurepo.map((row, rowIndex) => (
-                <FormControlLabel
-                  value={row.tsukurepo_id}
-                  control={<Radio />}
-                  label={row.message}
-                />
-              ))}
-            </RadioGroup>
-          </FormControl>
-        </>
-      ) : (
-        <>
-          <p>読み込み中</p>
-        </>
-      )}
-      <input name="file" type="file" accept="*.csv" onChange={onChangeFile} />
-      <input
-        type="button"
-        disabled={!file}
-        value="登録"
-        onClick={onClickSubmit}
-      />
+              つくれぽを選択してください
+            </Typography>
+
+            <TsukurepoLatestList
+              tsukurepos={{ tsukurepo: tsukurepo }}
+              onChildValue={handleChildValue}
+            />
+          </>
+        ) : (
+          <>
+            <p>読み込み中</p>
+          </>
+        )}
+        <input name="file" type="file" accept="*.csv" onChange={onChangeFile} />
+        <input
+          type="button"
+          disabled={!file}
+          value="登録"
+          onClick={onClickSubmit}
+        />
+      </Container>
     </>
   );
 };
