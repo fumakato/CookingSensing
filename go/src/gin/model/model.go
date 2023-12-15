@@ -12,14 +12,16 @@ import (
 type Users struct {
 	//ginではuserというテーブルにアクセスするときに自動的にusersを探してしまう。
 	//そのためmysqlのテーブル名はusersにする必要がある
-	UserId      int       `json:"user_id"`
-	CreatedAt   time.Time `json:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at" `
-	Name        string    `json:"name"`
-	Image       string    `json:"image"`
-	HistogramId int       `json:"histogram_id"`
-	RadarId     int       `json:"radar_id"`
-	LineId      int       `json:"line_id"`
+	UserId         int       `json:"user_id"`
+	CreatedAt      time.Time `json:"created_at"`
+	UpdatedAt      time.Time `json:"updated_at" `
+	FirebaseUid    string    `json:"firebase_uid" `
+	Identification bool      `json:"identification"`
+	Name           string    `json:"name"`
+	Image          string    `json:"image"`
+	HistogramId    int       `json:"histogram_id"`
+	RadarId        int       `json:"radar_id"`
+	LineId         int       `json:"line_id"`
 }
 
 // UserId      int       `json:"user_id" gorm:"primaryKey;not null"`

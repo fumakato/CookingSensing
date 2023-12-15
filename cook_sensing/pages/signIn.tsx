@@ -1,25 +1,16 @@
 import {
-  Avatar,
-  Box,
   Button,
-  Checkbox,
-  FormControlLabel,
   Grid,
   Link,
   Paper,
-  Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { teal } from "@mui/material/colors";
+
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
-import { Histogram, RadarChart, MadeLatestRecipe, Header } from "../components";
-// import { Histogram, MadeLatestRecipe } from "../components";
-import AspectRatio from "@mui/joy/AspectRatio";
-import { CssVarsProvider } from "@mui/joy/styles";
-import { Chart, registerables } from "chart.js";
+
 import React, { useState, ChangeEvent, useEffect } from "react";
 
 import {
@@ -32,13 +23,13 @@ import { auth } from "./firebase/FirebaseConfig";
 import axios, { AxiosError } from "axios";
 
 const Home: NextPage = () => {
-  // export const Login = () => {
   const router = useRouter();
   const apiUrl = "http://localhost:3000";
   const [errorMessage, setErrorMessage] = useState("");
   const [mail, setMail] = useState("");
   const [pass, setPass] = useState("");
   const [fireuser, setFireUser] = useState<FireUser | null>(null);
+  const [user_id, setUser_id] = useState("");
 
   // TextFieldの値が変更されたときのハンドラ
   const handleChangeMail = (event: ChangeEvent<HTMLInputElement>) => {
@@ -53,6 +44,8 @@ const Home: NextPage = () => {
     e.preventDefault();
 
     try {
+      console.log(mail);
+      console.log(pass);
       await signInWithEmailAndPassword(auth, mail, pass);
     } catch (error) {
       alert("メールアドレスまたはパスワードが間違っています");
@@ -65,28 +58,35 @@ const Home: NextPage = () => {
     });
   });
 
-  if (fireuser) {
-    axios
-      .get(`${apiUrl}/users/login/${fireuser.uid}`)
-      .then((res) => {
-        console.log("res -> " + res.data);
-        router.push(`/user/${res.data}`);
-        // signOut(auth);
-      })
-      .catch((e: AxiosError) => {
-        console.error(e);
-        signOut(auth);
-      });
+  useEffect(() => {
+    if (fireuser) {
+      interface Uid {
+        uid: string;
+      }
+      const fire_uid: Uid = {
+        uid: fireuser.uid,
+      };
+      axios
+        .post(`${apiUrl}/users/firebase`, fire_uid)
+        .then((res) => {
+          console.log("res -> " + res.data);
+          setUser_id(res.data.user_id);
+        })
+        .catch((e: AxiosError) => {
+          console.error(e);
+          signOut(auth);
+        });
+    }
+  }, [fireuser]);
 
-    // router.push("/firebase/Mypage");
+  if (fireuser && user_id) {
+    router.push(`/users/${user_id}`);
   }
 
   // ↓これなんだ？
   // Chart.register(...registerables);
   return (
     <>
-      <h1>{fireuser?.email}</h1>
-      <h1>{fireuser?.uid}</h1>
       <Paper
         // elevation={0}
         elevation={3}
@@ -96,7 +96,7 @@ const Home: NextPage = () => {
           // width: "30%",
           height: "auto",
           width: "50vw",
-          m: "auto auto",
+          m: "3% auto",
         }}
       >
         <Grid
@@ -113,55 +113,44 @@ const Home: NextPage = () => {
             Sign In
           </Typography>
         </Grid>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            type="mail"
+            label="メールアドレス"
+            variant="standard"
+            value={mail}
+            fullWidth
+            required
+            onChange={handleChangeMail}
+          />
+          <TextField
+            type="password"
+            label="パスワード"
+            variant="standard"
+            value={pass}
+            fullWidth
+            required
+            onChange={handleChangePass}
+          />
 
-        <TextField
-          type="mail"
-          label="メールアドレス"
-          variant="standard"
-          value={mail}
-          fullWidth
-          required
-          onChange={handleChangeMail}
-        />
-        <TextField
-          type="password"
-          label="パスワード"
-          variant="standard"
-          value={pass}
-          fullWidth
-          required
-          onChange={handleChangePass}
-        />
-
-        {/* 🔴 */}
-        <Box mt={3}>
           <Button
             type="submit"
             color="primary"
             variant="contained"
             fullWidth
-            sx={{ marginBottom: "10%" }}
-            // onClick={async () => {
-            //   router.push({
-            //     // pathname: `/${response.data.id}`, //URL
-            //     pathname: `/user/${mail}`, //ここにはIDが入る予定
-            //     query: { moveId: mail }, //検索クエリ
-            //   });
-            // }}
+            sx={{ marginBottom: "10%", marginTop: "10%" }}
             onClick={handleSubmit}
           >
             サインイン
           </Button>
-
-          <Typography variant="caption" display="block">
-            アカウントを持っていない方はこちら→
-            <Link href="/signUp">サインアップ</Link>
-          </Typography>
-        </Box>
+        </form>
+        <Typography variant="caption" display="block">
+          アカウントを持っていない方はこちら→
+          <Link href="/signUp">サインアップ</Link>
+        </Typography>
       </Paper>
     </>
   );
 };
 
-// export default Login;
 export default Home;

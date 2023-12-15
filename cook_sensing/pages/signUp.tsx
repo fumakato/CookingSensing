@@ -1,26 +1,16 @@
 import {
-  Avatar,
   Box,
   Button,
-  Checkbox,
-  FormControlLabel,
   Grid,
   Link,
   Paper,
-  Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import { teal } from "@mui/material/colors";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
-import { Histogram, RadarChart, MadeLatestRecipe, Header } from "../components";
-// import { Histogram, MadeLatestRecipe } from "../components";
-import AspectRatio from "@mui/joy/AspectRatio";
-import { CssVarsProvider } from "@mui/joy/styles";
-import { Chart, registerables } from "chart.js";
 import React, { useState, ChangeEvent, useEffect } from "react";
 
 import {
@@ -34,7 +24,6 @@ import { auth } from "./firebase/FirebaseConfig";
 import axios, { AxiosError } from "axios";
 
 const SignUpPage: NextPage = () => {
-  // export const Login = () => {
   const router = useRouter();
   const apiUrl = "http://localhost:3000";
   const [errorMessage, setErrorMessage] = useState("");
@@ -42,6 +31,7 @@ const SignUpPage: NextPage = () => {
   const [pass, setPass] = useState("");
   const [userURL, setUserURL] = useState("");
   const [fireuser, setFireUser] = useState<FireUser | null>(null);
+  const [user_id, setUser_id] = useState("");
 
   // TextFieldの値が変更されたときのハンドラ
   const handleChangeMail = (event: ChangeEvent<HTMLInputElement>) => {
@@ -65,18 +55,14 @@ const SignUpPage: NextPage = () => {
         //URLが正しい場合はここになる
         const number = match[1]; // 数字部分
         console.log(number); // 54208270
+        setUser_id(number);
         try {
           //ここでアカウントを作る
           await createUserWithEmailAndPassword(auth, mail, pass);
         } catch (error: any) {
           alert("メールかパスワードに問題があります");
         }
-        try {
-          //await
-          //ここで梶研DBに登録する
-        } catch {
-          alert("エラーが発生しました。もう一度お試しください");
-        }
+
         alert("登録が完了しました");
       } else {
         alert("URLが正しいか確認してください");
@@ -84,13 +70,6 @@ const SignUpPage: NextPage = () => {
     } else {
       alert("https://cookpad.com/kitchen/ から始まるURLを入力してください");
     }
-
-    // // こいつはログインのだから変えておこう
-    // try {
-    //   await signInWithEmailAndPassword(auth, mail, pass);
-    // } catch (error) {
-    //   alert("メールアドレスまたはパスワードが間違っています");
-    // }
   };
 
   useEffect(() => {
@@ -99,40 +78,33 @@ const SignUpPage: NextPage = () => {
     });
   });
 
-  if (fireuser) {
-    //ここpostに変える
-    axios
-      .get(`${apiUrl}/users/login/${fireuser.uid}`)
-      .then((res) => {
-        console.log("res -> " + res.data);
-        router.push(`/user/${res.data}`);
-        // signOut(auth);
-      })
-      .catch((e: AxiosError) => {
-        console.error(e);
-        signOut(auth);
-      });
-    // axios
-    // .get(`${apiUrl}/users/login/${fireuser.uid}`)
-    // .then((res) => {
-    //   console.log("res -> " + res.data);
-    //   router.push(`/user/${res.data}`);
-    //   // signOut(auth);
-    // })
-    // .catch((e: AxiosError) => {
-    //   console.error(e);
-    //   signOut(auth);
-    // });
-
-    // router.push("/firebase/Mypage");
-  }
+  useEffect(() => {
+    if (fireuser) {
+      interface PostData {
+        user_id: number;
+        firebase_uid: string;
+      }
+      const postData: PostData = {
+        user_id: Number(user_id),
+        firebase_uid: fireuser.uid,
+      };
+      axios
+        .post(`${apiUrl}/users`, postData)
+        .then((res) => {
+          console.log(res.data);
+          router.push(`/user/${res.data.user_id}`);
+        })
+        .catch((e: AxiosError) => {
+          console.error(e);
+          alert("エラーが発生しました。");
+        });
+    }
+  }, [fireuser]);
 
   // ↓これなんだ？
   // Chart.register(...registerables);
   return (
     <>
-      <h1>{fireuser?.email}</h1>
-      <h1>{fireuser?.uid}</h1>
       <Paper
         // elevation={0}
         elevation={3}
@@ -142,7 +114,7 @@ const SignUpPage: NextPage = () => {
           // width: "30%",
           height: "auto",
           width: "50vw",
-          m: "auto auto",
+          m: "3% auto",
         }}
       >
         <Grid
@@ -159,71 +131,61 @@ const SignUpPage: NextPage = () => {
             Sign Up
           </Typography>
         </Grid>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            type="mail"
+            label="メールアドレス"
+            variant="standard"
+            value={mail}
+            fullWidth
+            required
+            onChange={handleChangeMail}
+          />
+          <TextField
+            type="password"
+            label="パスワード"
+            variant="standard"
+            value={pass}
+            fullWidth
+            required
+            onChange={handleChangePass}
+          />
+          <TextField
+            type="password"
+            label="あなたのクックパッドのURL(https://cookpad.com/kitchen/...)"
+            variant="standard"
+            value={userURL}
+            fullWidth
+            required
+            onChange={handleChangeUserURL}
+          />
 
-        <TextField
-          type="mail"
-          label="メールアドレス"
-          variant="standard"
-          value={mail}
-          fullWidth
-          required
-          onChange={handleChangeMail}
-        />
-        <TextField
-          type="password"
-          label="パスワード"
-          variant="standard"
-          value={pass}
-          fullWidth
-          required
-          onChange={handleChangePass}
-        />
-        <TextField
-          type="password"
-          label="あなたのクックパッドのURL(https://cookpad.com/kitchen/0000)"
-          variant="standard"
-          value={pass}
-          fullWidth
-          required
-          onChange={handleChangeUserURL}
-        />
-
-        {/* 🔴 */}
-        <Box mt={3}>
           <Button
             type="submit"
             color="primary"
             variant="contained"
-            sx={{ marginBottom: "10%" }}
+            sx={{ marginBottom: "10%", marginTop: "10%" }}
             fullWidth
-            // onClick={async () => {
-            //   router.push({
-            //     // pathname: `/${response.data.id}`, //URL
-            //     pathname: `/user/${mail}`, //ここにはIDが入る予定
-            //     query: { moveId: mail }, //検索クエリ
-            //   });
-            // }}
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
           >
             サインアップ
           </Button>
+        </form>
+        <Typography variant="caption" display="block">
+          あなたのクックパッドURLには
+          {/* <Link href="/signUp">アカウントを作成</Link> */}
+        </Typography>
+        <Typography variant="caption" display="block">
+          「https://cookpad.com/kitchen」から始まる
+        </Typography>
+        <Typography variant="caption" display="block">
+          URLを入力してください
+        </Typography>
 
-          <Typography variant="caption" display="block">
-            あなたのクックパッドURLには
-            {/* <Link href="/signUp">アカウントを作成</Link> */}
-          </Typography>
-          <Typography variant="caption" display="block">
-            「https://cookpad.com/kitchen」から始まる
-          </Typography>
-          <Typography variant="caption" display="block">
-            URLを入力してください
-          </Typography>
-
-          <Typography variant="caption" display="block">
-            アカウントを持っている方はこちら→
-            <Link href="/signIn">サインイン</Link>
-          </Typography>
-        </Box>
+        <Typography variant="caption" display="block">
+          アカウントを持っている方はこちら→
+          <Link href="/signIn">サインイン</Link>
+        </Typography>
       </Paper>
     </>
   );

@@ -37,7 +37,7 @@ func FindUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
-// ユーザをIDで検索
+// ユーザをIDで検索 GET
 func FindUsersById(c *gin.Context) {
 	// Get path pram ":id"
 	fmt.Println("FindUsersById")
@@ -59,28 +59,35 @@ func FindUsersById(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
+// ユーザ検索firebase POST
 func FindUsersByUid(c *gin.Context) {
-	// Get path pram ":id"
-	fmt.Println("FindUsersByUid")
-	id := c.Param("uid")
-	fmt.Println("id=「" + id + "」")
+	type Uid struct {
+		Uid string `json:"uid"`
+	}
+	fmt.Println("FindUsersByFirebaseUid")
+	var uid Uid
+	if err := c.BindJSON(&uid); err != nil { //引数からuserの方に入れる。入れれるかのチェックもしてる
+		c.String(http.StatusBadRequest, "Bad request")
+		fmt.Println("型が違う可能性あり。エラー内容:", err) // エラー内容をコンソールに表示
+		return
+	}
+	fmt.Println("uid=「" + uid.Uid + "」")
+	var user model.Users
+	// Connect database
+	db := database.Connect()
+	defer db.Close()
+	// Find
+	// if err := db.First(&user, "id = ?", id).Error; err != nil {
+	if err := db.First(&user, "firebase_uid = ?", uid.Uid).Error; err != nil {
+		fmt.Println("見つかりません")
+		c.String(http.StatusNotFound, "Not Found")
+		return
+	}
+	// Response
+	fmt.Println("見つかりました")
+	c.JSON(http.StatusOK, user)
 
-	userid := 54208270
-
-	// var user model.Users
-	// // Connect database
-	// db := database.Connect()
-	// defer db.Close()
-	// // Find
-	// // if err := db.First(&user, "id = ?", id).Error; err != nil {
-	// if err := db.First(&user, "user_id = ?", id).Error; err != nil {
-	// 	fmt.Println("見つかりません")
-	// 	c.String(http.StatusNotFound, "Not Found")
-	// 	return
-	// }
-	// // Response
-	// fmt.Println("見つかりました")
-	c.JSON(http.StatusOK, userid)
+	// c.JSON(http.StatusOK, uid.Uid)
 }
 
 // ユーザの登録
@@ -93,6 +100,38 @@ func CreateUsers(c *gin.Context) {
 		fmt.Println("型が違う可能性あり。エラー内容:", err) // エラー内容をコンソールに表示
 		return
 	}
+
+	// //スクレイピングで名前と画像を表示 -> firebaseとの順番めんどくさいからとりあえずなしで
+	// userID := strconv.Itoa(user.UserId)
+	// res, err := http.Get("https://cookpad.com/kitchen/" + userID)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// defer res.Body.Close()
+	// var icon string
+	// var name string
+	// doc, err := goquery.NewDocumentFromReader(res.Body)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// //icon取得
+	// s := doc.Find("img.official_kitchen_user_icon").First()
+	// if s != nil {
+	// 	icon = s.AttrOr("src", "")
+	// }
+	// //name取得
+	// s2 := doc.Find("a[data-type='click_title']").First()
+	// if s != nil {
+	// 	name = s2.AttrOr("data-user-name", "")
+	// }
+	// if icon == "" && name == "" {
+	// 	c.String(http.StatusBadRequest, "CookPadUser Not Found")
+	// 	fmt.Println("クックパッドのユーザが見つかりません。エラー内容:", err)
+	// 	return
+	// }
+	// user.Image = icon
+	// user.Name = name
+
 	// Connect database
 	db := database.Connect()
 	defer db.Close()
@@ -103,6 +142,7 @@ func CreateUsers(c *gin.Context) {
 		fmt.Println("DBに登録する際にエラーが発生。エラー内容:", err)
 		return
 	}
+
 	// Response
 	c.JSON(http.StatusCreated, user)
 	fmt.Println("登録完了")

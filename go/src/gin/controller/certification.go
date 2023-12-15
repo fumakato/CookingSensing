@@ -15,21 +15,6 @@ type QueryParams struct {
 	Word   string `json:"word"`
 }
 
-func CarTeat(c *gin.Context) { //なんこれ？
-	fmt.Println("CarTeat")
-	var queryParams QueryParams
-	if err := c.BindJSON(&queryParams); err != nil {
-		c.String(http.StatusBadRequest, "Bad request")
-		return
-	}
-	fmt.Println("CarTeat")
-	// word := c.Param("word")
-	// userid := c.Param("userid")
-	fmt.Println(queryParams.Word)
-	fmt.Println(queryParams.Userid)
-	c.JSON(http.StatusOK, true)
-}
-
 func Certification(c *gin.Context) {
 	//セットアップ
 	fmt.Println("Certification")
@@ -38,12 +23,12 @@ func Certification(c *gin.Context) {
 		c.String(http.StatusBadRequest, "Bad request")
 		return
 	}
-
 	word := queryParams.Word
 	userid := queryParams.Userid
 	fmt.Println("word= " + word)
 	fmt.Println("userid= " + userid)
 
+	//デバッグ用
 	// userid := "54208270"
 	// userid := "54177797"
 	// word := "作ってみましたー"
@@ -57,7 +42,7 @@ func Certification(c *gin.Context) {
 
 	// 5分間のタイマーを作成
 	// timer := time.NewTimer(5 * time.Minute)
-	timer := time.NewTimer(20 * time.Second)
+	timer := time.NewTimer(20 * time.Second) //デバッグよう
 
 	select {
 	case <-timer.C:
@@ -91,7 +76,7 @@ func repetition(userID string, word string, scrapingResults [][]string, ch chan 
 	}
 }
 
-// webスクレイピング
+// webスクレイピングしてる部分。一瞬で終わるからそんな気にかけなくていい
 func scraping(userID string) [][]string {
 	// res, err := http.Get("https://cookpad.com/tsukurepo/list/54208270")
 	res, err := http.Get("https://cookpad.com/tsukurepo/list/" + userID)
@@ -122,6 +107,7 @@ func scraping(userID string) [][]string {
 	return scrapingResults
 }
 
+// 判定する部分。一瞬で終わるからそんな気にしなくていい
 func judgment(word string, lastResults [][]string, currentResults [][]string) bool {
 	result := false
 	// fmt.Println(lastResults)
@@ -232,3 +218,18 @@ func ScrapingByID(c *gin.Context) {
 // 		fmt.Println("型が違う可能性あり。エラー内容:", err) // エラー内容をコンソールに表示
 // 		return
 // 	}
+
+// func CarTeat(c *gin.Context) { //なんこれ？
+// 	fmt.Println("CarTeat")
+// 	var queryParams QueryParams
+// 	if err := c.BindJSON(&queryParams); err != nil {
+// 		c.String(http.StatusBadRequest, "Bad request")
+// 		return
+// 	}
+// 	fmt.Println("CarTeat")
+// 	// word := c.Param("word")
+// 	// userid := c.Param("userid")
+// 	fmt.Println(queryParams.Word)
+// 	fmt.Println(queryParams.Userid)
+// 	c.JSON(http.StatusOK, true)
+// }

@@ -2,13 +2,17 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
 	"os"
 	"os/exec"
 	"strings"
 	"time"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
-func main() {
+func main2() {
 	now := time.Now() // ①
 	// url := "https://cookpad.com/recipe/1438866"
 	url := "https://cookpad.com/kitchen/37779795"
@@ -70,4 +74,41 @@ func main() {
 		}
 	}
 	// fmt.Printf("③経過: %vms\n", time.Since(now).Milliseconds())
+}
+
+// func ScrapingByID(c *gin.Context) {
+func main() {
+	fmt.Println("スクレイピングByID")
+	userID := "123"
+	// userID := "220679"
+	// res, err := http.Get("https://cookpad.com/tsukurepo/list/54208270")
+	res, err := http.Get("https://cookpad.com/kitchen/" + userID)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer res.Body.Close()
+	var name string
+	var icon string
+
+	doc, err := goquery.NewDocumentFromReader(res.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	s := doc.Find("img.official_kitchen_user_icon").First()
+	if s != nil {
+		icon = s.AttrOr("src", "")
+	}
+	fmt.Println("icon")
+	fmt.Println(icon)
+
+	s2 := doc.Find("a[data-type='click_title']").First()
+	if s != nil {
+		name = s2.AttrOr("data-user-name", "")
+	}
+	fmt.Println("name")
+	fmt.Println(name)
+	if icon == "" && name == "" {
+		fmt.Println("どっちもない")
+	}
 }

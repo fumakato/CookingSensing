@@ -43,7 +43,7 @@ func main() { //ここでサーバを開いている
 	usersEngine := engine.Group("/users")
 	{
 		usersEngine.GET(":id", controller.FindUsersById)
-		usersEngine.GET("/login/:uid", controller.FindUsersByUid)
+		// usersEngine.GET("/login/:uid", controller.FindUsersByUid)
 		usersEngine.GET("", controller.FindUsers)
 
 		usersEngine.POST("", controller.CreateUsers) //未実装
@@ -51,6 +51,8 @@ func main() { //ここでサーバを開いている
 		usersEngine.POST("/uploads", controller.DataUpload)
 
 		usersEngine.PUT("", controller.UpdateUsersById)
+
+		usersEngine.POST("/firebase", controller.FindUsersByUid)
 
 		// usersEngine.GET("", func(c *gin.Context) {
 		// 	c.JSON(http.StatusOK, gin.H{
