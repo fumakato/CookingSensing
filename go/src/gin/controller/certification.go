@@ -136,6 +136,7 @@ func judgment(word string, lastResults [][]string, currentResults [][]string) bo
 	return result
 }
 
+// こいつは他のところのやつ
 func ScrapingByID(c *gin.Context) {
 	fmt.Println("スクレイピングByID")
 	userID := c.Param("id")
