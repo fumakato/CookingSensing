@@ -128,7 +128,7 @@ export const Header = ({
               ></SettingsIcon>
             </div>
           </Grid>
-          <Grid item xs={2}></Grid>
+          <Grid item xs={2}></Grid> 
         </Grid>
       </div>
       <div style={headerUnder}>

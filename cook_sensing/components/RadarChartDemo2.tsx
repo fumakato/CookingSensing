@@ -15,7 +15,7 @@ import {
   Legend,
   ChartOptions,
 } from "chart.js";
-import { Bar, Radar } from "react-chartjs-2"; //ここにも必要なものを追加
+import { Radar } from "react-chartjs-2"; //ここにも必要なものを追加
 import { Paper } from "@mui/material";
 
 ChartJS.register(
@@ -29,7 +29,7 @@ ChartJS.register(
   Legend
 );
 
-//コンポーネントの呼び出し元から送られてくる型
+//コンポーネントの呼び出し元から送られてくる型old
 interface RadarApiArg {
   user_id?: string;
   type: string;
@@ -37,13 +37,33 @@ interface RadarApiArg {
   fontsize?: number;
 }
 
-//apiを呼び出して返ってくる値の型
+//apiを呼び出して返ってくる値の型old
 interface RadarGet {
   datas: number[];
   titles: title;
 }
-//上のtitlesの中身
+//上のtitlesの中身old
 interface title {
+  maintitle: string;
+  mainlabel: string;
+  label: string[];
+}
+
+//newコンポーネントの呼び出し元から送られてくる型
+interface RadarApiArgNew {
+  user_id?: string;
+  type: string;
+  size?: number;
+  fontsize?: number;
+}
+
+//apiを呼び出して返ってくる値の型
+interface RadarGetNew {
+  datas: number[];
+  titles: title;
+}
+//上のtitlesの中身
+interface titleNew {
   maintitle: string;
   mainlabel: string;
   label: string[];
@@ -119,7 +139,7 @@ export const RadarChartDemo2 = ({
   ];
 
   const data = {
-    labels,
+    labels: labels,
     datasets: [
       {
         // label: getData?.titles.mainlabel,

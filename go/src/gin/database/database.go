@@ -19,7 +19,8 @@ func Connect() (database *gorm.DB) {
 	USER := "root"
 	PASS := "rootcooksensing"
 	PROTOCOL := "tcp(localhost:3306)"
-	DB_NAME := "cook_sensing"
+	// DB_NAME := "cook_sensing"
+	DB_NAME := "test_cook"
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DB_NAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
 	if db, err := gorm.Open(DBMS, CONNECT); err != nil {
 		panic(err.Error())
@@ -52,15 +53,32 @@ func GetDateNow() time.Time {
 // }
 
 // マイグレートをする。データベースの操作に必要になるらしい
-func Migrate(db *gorm.DB) {
-	db.AutoMigrate(&model.Users{})
-	// db.AutoMigrate(&model.UsersRecipesAccs{})
-	// db.AutoMigrate(&model.Recipes{})
-	//db.AutoMigrate(&model.Acc{})
-	// db.AutoMigrate(&model.HistogramCutPaces{})
-	db.AutoMigrate(&model.Users{})
+func Migrate(db *gorm.DB) error {
+	err := db.AutoMigrate(&model.User{}, &model.FeatureData{}, &model.BestData{}, &model.Histogram{}, &model.Action{}, &model.DisplayItem{}).Error
+	if err != nil {
+		return err
 
+	}
+	return nil
 }
+
+// func migrateAndInsertInitialData(db *gorm.DB, insertDummyData bool) error {
+// 	// 自動マイグレーション
+// 	err := db.AutoMigrate(&model.User{}, &model.FeatureData{}, &model.BestData{}, &model.Histogram{}, &model.Action{}, &model.DisplayItem{}).Error
+// 	if err != nil {
+// 		return err
+// 	}
+
+// 	if insertDummyData {
+// 		// 初期データの挿入
+// 		err = initialdata.InsertInitialData(db)
+// 		if err != nil {
+// 			return err
+// 		}
+// 	}
+
+// 	return nil
+// }
 
 func ShowUser(db *gorm.DB) {
 	user := []*model.Users{}

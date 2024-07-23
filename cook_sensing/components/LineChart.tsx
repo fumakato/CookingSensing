@@ -1,278 +1,263 @@
-import axios from "axios";
-import React from "react";
+//折れ線グラフの表示
+//APiとは無関係
+//
+//Paperはこれで変える
+const paperOn = true;
 
+import React from "react";
+import Paper from "@mui/material/Paper";
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement, //これがないと動かん。他のグラフを使うならそれに見合ったエレメントが必要
   Title,
   Tooltip,
   Legend,
-  ChartOptions,
-} from "chart.js";
-import { Line } from "react-chartjs-2"; //ここにも必要なものを追加
-import { Paper } from "@mui/material";
-
-ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
-  BarElement,
+  ChartDataset,
+  LineControllerDatasetOptions,
+  ChartTypeRegistry,
+  Point,
+  BubbleDataPoint,
+  ChartEvent,
+  LegendElement,
+  ChartType,
+  LegendItem,
+} from "chart.js";
+
+ChartJS.register(
   Title,
   Tooltip,
-  Legend
+  Legend,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement
 );
 
 //コンポーネントの呼び出し元から送られてくる型
-interface HistogramApiArg {
-  user_id?: string;
-  type: string;
-  size?: number;
-  fontsize?: number;
+interface LineChartApiArg {
+  figureSize: number;
+  featureData: (number | null)[];
+  average: number;
+  label: Label;
+}
+interface Label {
+  mainTitle: string;
+  xSubTitle: string;
+  ySubTitle: string;
+  labels: string[];
 }
 
-//apiを呼び出して返ってくる値の型
-interface HistogramGet {
-  datas: number[];
-  titles: title;
-  grade: number;
-}
-//上のtitlesの中身
-interface title {
-  maintitle: string;
-  mainlabel: string;
-  besidetitle: string;
-  verticaltitle: string;
-  besidelabel: string[];
-}
+export const LineChart = ({
+  figureSize = 800,
+  featureData = [-1, 0, 1],
+  average = 0,
+  label = {
+    mainTitle: "メインタイトル",
+    xSubTitle: "X軸サブタイトル",
+    ySubTitle: "Y軸サブタイトル",
+    labels: ["a", "b", "c"],
+  },
+}: LineChartApiArg) => {
+  //
+  // 引数からラベル設定
+  const mainTitle = label.mainTitle;
+  const xSubTitle = label.xSubTitle;
+  const ySubTitle = label.ySubTitle;
+  const labels = label.labels;
 
-export const Histogram = ({
-  user_id = "", //値がなかった場合に入る
-  type = "", //値がなかった場合に入る
-  size = 30, //値がなかった場合に入る
-  fontsize = 14,
-}: HistogramApiArg) => {
-  //   const setting: string[] = [];
-  //   const [apiData, setApiData] = React.useState(setting);
-  //   const [user_id_url, setUser_id_url] = React.useState(user_id);
-  const [getData, setGetData] = React.useState<HistogramGet>(); //ここにGetのデータを入れていく
+  // 引数を元にサイズを決定
+  const fontSize = figureSize / 35; //フォントのサイズ
+  const subTitleFontSize = fontSize; //サブタイトルのサイズ
+  const mainTitleFontSize = fontSize * 1.25; //メインタイトルのサイズ
+  const numberFontSize = fontSize; //目盛の数字サイズ
+  const legendSize = fontSize * 0.9; //凡例のサイズ
+  const tooltipFontSize = fontSize; //ツールチップのサイズ
+  const titlePaddingTop = figureSize / 80; //タイトル上の余白
+  const titlePaddingBottom = figureSize / 120; //タイトル下の余白
+  const pointRadiusSize = figureSize / 120; // 点の大きさ
+  const pointHoverRadiusSize = figureSize / 60; // 点にマウスを重ねたときの大きさ
+  const figureWidthSize = figureSize; // グラフの横幅
+  const figureHeightSize = figureSize / 2; // グラフの縦幅
+  const tooltipPadding = fontSize / 2; // ツールチップの余白
+  const borderWidth = figureSize / 200;
 
-  //   const api = axios.create({
-  //     baseURL: "http://localhost:3000/", //http://20.168.98.13:8080/
-  //     timeout: 100000,
-  //   });
-  //url設定
-  const url = "http://localhost:3000/histogram/test";
-  const fetch = React.useMemo(async () => {
-    //apiで接続
-    // const data = await axios.get<HistogramGet>(url);
-    const { data } = await axios.get<HistogramGet>(url);
-    //上記{data}はdataという値から取ってきているため、他の名前で宣言できないっぽい
-    console.log("de-ta->" + data.grade);
-    setGetData(data);
-  }, []);
+  // 「あなたの記録」の色
+  const youBorderColor = "rgb(247,135,0)"; //オレンジ
+  const youBackColor = "rgb(247,135,0,0.8)"; //オレンジ
+  // 「他人の記録」の色
+  const otherBorderColor = "rgb(141,164,7)"; //緑
+  const otherBackColor = "rgb(141,164,7,0.8)"; //緑
+  // 「平均の記録」の色
+  const averageBorderColor = "rgb(150,150,150)"; //黒
+  const averageBackColor = "rgb(255,255,255,0)"; //透明(白)
+  // 「ツールチップ」の色
+  const tooltipBackColor = "rgb(0,0,0,0.7)"; //黒
 
-  React.useEffect(() => {
-    fetch;
-  }, []);
+  //表示する範囲を決定
+  const validFeatureData = featureData.filter(
+    (temp) => temp !== null
+  ) as number[];
+  const minFeatureData = Math.min(...validFeatureData); //データの最小値
+  const maxFeatureData = Math.max(...validFeatureData); //データの最大値
+  let max = 0; //固定値
+  let min = 0; //固定値
+  const division = 8; //固定値
+  if (maxFeatureData < average) {
+    //平均の方が最大値より大きい場合
+    const range = average - minFeatureData; //範囲
+    const chartMargin = range / division; //最大最小ポイントの上下にある余白のサイズ
+    min = minFeatureData - chartMargin;
+    max = average + chartMargin;
+  } else if (minFeatureData > average) {
+    //平均の方が最小値より小さい場合
+    const range = maxFeatureData - average; //範囲
+    const chartMargin = range / division; //最大最小ポイントの上下にある余白のサイズ
+    min = average - chartMargin;
+    max = maxFeatureData + chartMargin;
+  } else {
+    const range = maxFeatureData - minFeatureData; //範囲
+    const chartMargin = range / division; //最大最小ポイントの上下にある余白のサイズ
+    min = minFeatureData - chartMargin;
+    max = maxFeatureData + chartMargin;
+  }
+  // max = Math.ceil(max); //切り上げ
+  // min = Math.floor(min); //切り捨て
 
-  const text = getData?.titles.maintitle;
-  const options: ChartOptions<"bar"> = {
-    responsive: true, //ここをtrueにするとサイズが可変になる。
-    //サイズを変えるには呼び出すときにwidthとheightを設定してやる
+  // オプション
+  const options = {
+    responsive: true,
+    animation: {
+      duration: 0, // アニメーションを無効にする
+    },
     plugins: {
       title: {
-        display: true, //trueの時はタイトルを表示
-        // text: "他人との比較", //タイトルをここに入力
-        text: text, //タイトルをここに入力
-        font: { size: fontsize * 1.5 },
+        display: true,
+        text: mainTitle,
+        font: {
+          size: mainTitleFontSize, // タイトルのフォントサイズ
+          weight: "bold", // タイトルのフォントウェイト
+        },
+        padding: {
+          top: titlePaddingTop, // タイトルの上側の余白
+          bottom: titlePaddingBottom, // タイトルの下側の余白
+        },
+      },
+      legend: {
+        //データ1 とか 凡例
+        display: true,
+        position: "top", // レジェンドの位置（'top', 'left', 'bottom', 'right'）
+        labels: {
+          pointStyle: "line", // legendのpointStyleをlineに変更
+          usePointStyle: true, // ポイントスタイルを使用してカスタム描画
+          font: {
+            size: legendSize, // ラベルのフォントサイズを設定．四角もでかくなる
+          },
+        },
+        onClick: () => {},
+      },
+      tooltip: {
+        //ポイントにカーソルを重ねると表示 ツールチップ
+        backgroundColor: tooltipBackColor,
+        cornerRadius: 3,
+        displayColors: true,
+        titleFont: {
+          size: tooltipFontSize, // タイトルのフォントサイズ
+        },
+        bodyFont: {
+          size: tooltipFontSize, // 本文のフォントサイズ
+        },
+        padding: tooltipPadding,
       },
     },
     scales: {
       x: {
-        display: true,
         title: {
           display: true,
-          //   text: "一秒間あたりの切った回数",
-          text: getData?.titles.besidetitle,
-          font: { size: fontsize },
-        },
-        // //ラベルの関係の話
-        // ticks: {
-        //   callback: function (value: string, index: string, valuesues: string) {
-        //     return value + "回"; // 目盛の編集
-        //   },
-        // },
-      },
-
-      y: {
-        display: true,
-        title: {
-          display: true,
-          //   text: "人数",
-          text: getData?.titles.verticaltitle,
-          font: { size: fontsize },
-        },
-        // reverse: true, //逆向きになる
-        ticks: {
-          callback(tickValue, index, ticks) {
-            return tickValue;
-            // return tickValue + "人"; // 目盛の編集
-            //tickValue:データの値に応じて変わる
-            //index:メモリの横線の数
-            //ticks:[object]がいっぱい並んでる
+          text: xSubTitle,
+          font: {
+            size: subTitleFontSize, // X軸タイトルのフォントサイズ
+            weight: "normal", // X軸タイトルのフォントウェイト
           },
         },
+        ticks: {
+          font: {
+            size: numberFontSize, // X軸メモリのフォントサイズ
+            weight: "normal", // X軸メモリのフォントウェイト
+          },
+        },
+        type: "category", // x軸のスケールの型を明示的に指定
+      },
+      y: {
+        title: {
+          display: true,
+          text: ySubTitle,
+          font: {
+            size: subTitleFontSize, // X軸タイトルのフォントサイズ
+            weight: "normal", // X軸タイトルのフォントウェイト
+          },
+        },
+        ticks: {
+          font: {
+            size: numberFontSize, // Y軸メモリのフォントサイズ
+            weight: "normal", // Y軸メモリのフォントウェイト
+          },
+        },
+        min: min,
+        max: max,
       },
     },
   };
 
-  //背景色
-  const yellowBack = "rgba(255, 205, 86, 0.2)";
-  const redBack = "rgba(255, 99, 132, 0.2)";
-  const backGround: string[] = [];
-  var labellength = 100;
-  if (getData !== undefined) {
-    labellength = getData.titles.besidelabel.length;
-  }
-  for (var i = 0; i < labellength; i++) {
-    if (i != getData?.grade) {
-      //自分のデータの色
-      backGround.push(yellowBack);
-    } else {
-      backGround.push(redBack);
-    }
-  }
-  //囲い色
-  const yellowBorder = "rgb(255, 205, 86)";
-  const redBorder = "rgb(255, 99, 132)";
-  const border: string[] = [];
-  for (var i = 0; i < labellength; i++) {
-    if (i != getData?.grade) {
-      //自分のデータの色
-      border.push(yellowBorder);
-    } else {
-      border.push(redBorder);
-    }
-  }
-  const labels = getData?.titles.besidelabel;
   const data = {
-    labels,
+    labels: labels,
     datasets: [
       {
-        label: "data", //ラベルいるか？
-        data: getData?.datas,
-        backgroundColor: backGround,
-        borderColor: border,
-        // グラフの枠線の太さ
-        borderWidth: 1,
+        label: "あなた",
+        data: featureData,
+        borderColor: youBorderColor,
+        backgroundColor: youBackColor,
+        spanGaps: true,
+        pointRadius: pointRadiusSize, // データポイントの大きさ
+        pointHoverRadius: pointHoverRadiusSize, // ホバー時のデータポイントを非表示
+        borderWidth: borderWidth, // 線の太さを設定
+      },
+      {
+        label: "みんなの平均",
+        data: Array(featureData.length).fill(average),
+        borderColor: otherBorderColor,
+        backgroundColor: otherBackColor,
+        spanGaps: true,
+        // borderDash: [5, 6], // 5pxの線と6pxの隙間の繰り返し
+        pointRadius: 0, // データポイントを非表示
+        borderWidth: borderWidth, // 線の太さを設定
       },
     ],
   };
-
-  if (getData !== undefined) {
+  if (paperOn) {
     return (
-      <Paper
-        sx={{
-          p: 2,
-          // m: 1,
-          // margin: "auto",
-          m: "10px auto",
-          maxWidth: "90%",
-          flexGrow: 1,
-        }}
-      >
+      <>
         <Paper
-          // デバッグよう。elevationは0にするとい
-          elevation={0}
-          sx={{
-            p: 1,
-            height: `${size}vw`,
-            width: `${size}vw`,
-            m: "0px auto",
-          }}
-          // background-image
-          // style={{ backgroundColor: "#fafaf5" }}
+          // elevation={1}
+          variant="outlined"
+          style={{ width: "fit-content", padding: "0.5vw", margin: "0.5vw" }}
         >
-          {/* <Bar data={data} width={width} height={height} options={options} /> */}
-          <Bar data={data} width={1000} height={1000} options={options} />
+          <div style={{ height: figureHeightSize, width: figureWidthSize }}>
+            <Line data={data} options={options as any} />
+          </div>
         </Paper>
-      </Paper>
+      </>
     );
   } else {
-    return <></>;
+    return (
+      <>
+        <div style={{ height: figureHeightSize, width: figureWidthSize }}>
+          <Line data={data} options={options as any} />
+        </div>
+      </>
+    );
   }
 };
-
-// import React from "react";
-// import {
-//   Chart as ChartJS,
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-//   Title,
-//   Tooltip,
-//   Legend,
-// } from "chart.js";
-// import { Line } from "react-chartjs-2";
-// import { Histogram, RadarChart } from "../components";
-
-// ChartJS.register(
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-//   Title,
-//   Tooltip,
-//   Legend
-// );
-
-// const Graph: React.FC = () => {
-//   const options = {
-//     responsive: true,
-//     plugins: {
-//       title: {
-//         display: true,
-//         text: "以前までの自分との比較",
-//       },
-//     },
-//   };
-
-//   const labels = [
-//     "1回目",
-//     "2回目",
-//     "3回目",
-//     "4回目",
-//     "5回目",
-//     "6回目",
-//     "7回目",
-//   ];
-
-//   const data = {
-//     labels,
-//     datasets: [
-//       {
-//         label: "データ1",
-//         data: [10, 9, 9, 7, 6, 7, 6],
-//         borderColor: "rgb(255, 99, 132)",
-//         backgroundColor: "rgba(255, 99, 132, 0.5)",
-//       },
-//     ],
-//   };
-
-//   return (
-//     <>
-//       {/* <RadarChart type={"aa"} /> */}
-//       <RadarChart type={"a"} user_id="89" />
-//       <Histogram type={"aa"} size={40} fontsize={14} />
-//       <Line options={options} data={data} />
-//     </>
-//   );
-// };
-
-// export default Graph;

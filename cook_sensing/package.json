@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "PORT=3001 next dev",
+    "dev": "PORT=3000 next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
-    "chart.js": "^4.0.1",
-    "react-chartjs-2": "^5.0.1"
+    "chart.js": "^4.4.3",
+    "react-chartjs-2": "^5.2.0"
   }
 }
