@@ -16,10 +16,10 @@ func LoadConfig() {
 }
 
 func GetDBConfig() string {
-	// dbms := os.Getenv("DBMS")
-	user := os.Getenv("USER")
-	pass := os.Getenv("PASS")
-	protocol := os.Getenv("PROTOCOL")
+	// dbms := os.Getenv("DB_MS")
+	user := os.Getenv("DB_USER")
+	pass := os.Getenv("DB_PASS")
+	protocol := os.Getenv("DB_PROTOCOL")
 	dbName := os.Getenv("DB_NAME")
 
 	return fmt.Sprintf("%s:%s@%s/%s?charset=utf8mb4&parseTime=True&loc=Local", user, pass, protocol, dbName)

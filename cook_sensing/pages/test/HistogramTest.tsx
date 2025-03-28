@@ -28,6 +28,7 @@ const Graph: React.FC = () => {
     "1.4",
     "1.5",
   ];
+
   const labelBae = ["", "", "", "", "", "", "", "", "", "", "", ""];
   const youDataNumber = 4;
   const averageDataNumber = 5;
@@ -44,6 +45,7 @@ const Graph: React.FC = () => {
     },
     youDataNumber: youDataNumber,
   };
+
   const barChartProps = {
     figureSize: size * vw,
     featureData: featureDataHistogram,

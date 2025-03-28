@@ -231,7 +231,7 @@ export const LineChart = ({
         borderColor: otherBorderColor,
         backgroundColor: otherBackColor,
         spanGaps: true,
-        // borderDash: [5, 6], // 5pxの線と6pxの隙間の繰り返し
+        borderDash: [6, 5], // 6pxの線と5pxの隙間の繰り返し
         pointRadius: 0, // データポイントを非表示
         borderWidth: borderWidth, // 線の太さを設定
       },

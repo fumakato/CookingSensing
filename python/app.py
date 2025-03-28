@@ -1,34 +1,13 @@
-# from flask import Flask, request, jsonify
-
-# app = Flask(__name__)
-
-# # GETリクエスト用のルート
-# @app.route('/api/get_example', methods=['GET'])
-# def get_example():
-#     response = {
-#         'message': 'This is a GET request example.'
-#     }
-#     return jsonify(response)
-
-# # POSTリクエスト用のルート
-# @app.route('/api/post_example', methods=['POST'])
-# def post_example():
-#     data = request.json
-#     response = {
-#         'message': 'This is a POST request example.',
-#         'data_received': data
-#     }
-#     return jsonify(response)
-
-# # サーバを実行
-# if __name__ == '__main__':
-#     app.run(debug=True)
-
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import external_code  # 別ファイルをインポート
 import featureExtraction
+import logging  # ロギングモジュールをインポート
 
 app = Flask(__name__)
+
+# ロギングの設定
+logging.basicConfig(level=logging.ERROR)  # ロギングレベルを設定
+logger = logging.getLogger(__name__)
 
 # GETリクエスト用のルート
 @app.route('/get', methods=['GET'])
@@ -48,13 +27,24 @@ def get_example2():
     }
     return jsonify(response)
 
-@app.route('/feature_extraction', methods=['GET'])
-def get_example3():
-    result = featureExtraction.feature_extraction()
-    response = {
-        'result': result
-    }
-    return jsonify(response)
+@app.route('/feature_extraction', methods=['POST'])
+def post_example1():
+    data = request.get_json()
+    url = data.get('url')
+    response = featureExtraction.feature_extraction(url)
+    # result = featureExtraction.feature_extraction()
+    # response = {
+    #     'result': result
+    # }
+    # return jsonify(response)
+    return response
+
+# カスタムエラーハンドラ
+@app.errorhandler(Exception)
+def handle_exception(e):
+    # エラーログにエラーの詳細を記録
+    logger.error(f"Unhandled Exception: {e}")
+    return jsonify({'error': 'An unexpected error occurred'}), 500
 
 # サーバを実行
 if __name__ == '__main__':

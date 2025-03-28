@@ -18,6 +18,7 @@ var UserInitData = []User{
 	{ID: 10, Name: "ueji"},
 	{ID: 11, Name: "ayato"},
 	{ID: 12, Name: "fuma"},
+	{ID: 13, Name: "guest"},
 }
 
 // time.Date(年, 月, 日, 時, 分, 秒, m秒, time.Local)
@@ -46,10 +47,35 @@ var FeatureDataInitData = []FeatureData{
 	{ID: 18, UserID: 12, ActionID: 1, AveragePace: 1.1571, AccelerationStandardDeviation: 2.6615, Date: second},
 }
 
+// それぞれの人の一番良いデータ
+var BestDataData = []BestData{
+	// {UserID: 0, AveragePace: 0,AccelerationStandardDeviation:0},
+	{UserID: 1, AveragePace: 0.9000, AccelerationStandardDeviation: 0.8597},
+	{UserID: 2, AveragePace: 1.0895, AccelerationStandardDeviation: 4.9175},
+	{UserID: 3, AveragePace: 0.9273, AccelerationStandardDeviation: 0.2387},
+	{UserID: 4, AveragePace: 0.7444, AccelerationStandardDeviation: 1.2692},
+	{UserID: 5, AveragePace: 1.4776, AccelerationStandardDeviation: 2.8749},
+	{UserID: 6, AveragePace: 0.5948, AccelerationStandardDeviation: 0.7631},
+	{UserID: 7, AveragePace: 0.8431, AccelerationStandardDeviation: 0.7080},
+	{UserID: 8, AveragePace: 0.8888, AccelerationStandardDeviation: 1.6120},
+	{UserID: 9, AveragePace: 0.8333, AccelerationStandardDeviation: 7.2507},
+	{UserID: 10, AveragePace: 1.3589, AccelerationStandardDeviation: 1.4508},
+	{UserID: 11, AveragePace: 1.0116, AccelerationStandardDeviation: 2.1764},
+	{UserID: 12, AveragePace: 1.1571, AccelerationStandardDeviation: 2.6615},
+}
+
+var HistogramData = []Histogram{
+	{ID: 1, DisplayItemID: 1, ActionID: 1},
+	{ID: 2, DisplayItemID: 2, ActionID: 1},
+	// 実際の値については後から入れる
+}
+
+// 輪切りとか
 var ActionInitData = []Action{
 	{ID: 1, Type: "slice"},
 }
 
+// 平均ペースとか
 var DisplayItemInitData = []DisplayItem{
 	{ID: 1, Item: "average pace"},
 	{ID: 2., Item: "cutting force fluctuation magnitude"},

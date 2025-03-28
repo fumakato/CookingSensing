@@ -82,7 +82,7 @@ const createArrowPlugin = (figureSize: number, arrowFlg: boolean): Plugin => {
         ctx.stroke();
 
         const arrowMove = figureSize / 130;
-        console.log("arrowMove: " + arrowMove);
+        // console.log("arrowMove: " + arrowMove);
 
         // 左矢印の頭
         ctx.beginPath();
@@ -160,7 +160,7 @@ export const BarChart = ({
   const labels = label.labels;
 
   figureSize;
-  console.log("figureSize: " + figureSize);
+  // console.log("figureSize: " + figureSize);
 
   // 引数を元にサイズを決定
   const fontSize = figureSize / 35; //フォントのサイズ

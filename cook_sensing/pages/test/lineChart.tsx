@@ -1,5 +1,6 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
+import { LineChart } from "../../components";
 import {
   Chart as ChartJS,
   Title,
@@ -23,7 +24,8 @@ ChartJS.register(
 
 const Graph: React.FC = () => {
   // 後から変える変数たち
-  const FeatureData = [7.251, 6.9, 6.4, 5.5, null, null, 5.9, 4.9];
+  const FeatureData1 = [5.251, 4.9, 4.4, 3.5, 3.1, 2.8, 2.3, 1.9];
+  const FeatureData = [2.1, 2.05, 1.99, 1.97, null, null, 1.99, 1.98];
   const average = 2.271;
   const figureSize = 800;
   const mainTitle = "力のブレの大きさ -過去と比較-";
@@ -191,7 +193,8 @@ const Graph: React.FC = () => {
       {
         label: "みんなの平均",
         data: Array(FeatureData.length).fill(average),
-        borderColor: averageBorderColor,
+        borderColor: otherBorderColor,
+        // borderColor: averageBorderColor,
         backgroundColor: averageBackColor,
         spanGaps: true,
         borderDash: [5, 6], // 5pxの線と6pxの隙間の繰り返し
@@ -200,12 +203,24 @@ const Graph: React.FC = () => {
     ],
   };
 
+  const chartProps = {
+    figureSize: 800,
+    featureData: FeatureData,
+    average: average,
+    label: {
+      mainTitle: mainTitle,
+      xSubTitle: xSubtitle,
+      ySubTitle: ySubtitle,
+      labels: labels,
+    },
+  };
+
   return (
     <>
       <div style={{ height: figureHeightSize, width: figureWidthSize }}>
-        {/* 固定サイズの設定 */}
         <Line data={data} options={options as any} />
       </div>
+      <LineChart {...chartProps}></LineChart>
     </>
   );
 };
