@@ -1,11 +1,11 @@
-import { SignIn } from "../../components";
+// import { SignIn } from "../../components";
 
-const Home = () => {
-  return (
-    <>
-      <SignIn />
-    </>
-  );
-};
+// const Home = () => {
+//   return (
+//     <>
+//       <SignIn />
+//     </>
+//   );
+// };
 
-export default Home;
+// export default Home;
