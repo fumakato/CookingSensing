@@ -1,13 +1,13 @@
 // src/App.tsx
 import React, { useEffect, useContext, useState } from "react";
-import { AuthProvider, AuthContext } from "./AuthProvider";
+import { AuthProvider, AuthContext } from "../../firebase_set/AuthProvider";
 import SignUpForm from "./SignUpForm";
 import SignInForm from "./SignInForm";
 import SignInComponent from "./SignInComponent";
 import { useRouter } from "next/router";
 
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
+import { auth } from "../../firebase_set/firebase";
 
 const App: React.FC = () => {
   // const { currentUser } = useContext(AuthContext); // 修正

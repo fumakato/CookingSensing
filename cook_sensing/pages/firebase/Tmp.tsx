@@ -1,5 +1,5 @@
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
+import { auth } from "../../firebase_set/firebase";
 
 const App: React.FC = () => {
   onAuthStateChanged(auth, (user) => {

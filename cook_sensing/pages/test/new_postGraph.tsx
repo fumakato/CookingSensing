@@ -5,7 +5,7 @@ import { LineChart, VwToPx, HistogramVer2, BarChart } from "../../components";
 import axios from "axios";
 import { Paper, Grid } from "@mui/material";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase/firebase";
+import { auth } from "../../firebase_set/firebase";
 
 import { useRouter } from "next/router";
 
