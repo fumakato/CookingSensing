@@ -1,18 +1,18 @@
-//jsonを読み込んで折れ線グラフを表示
+// //jsonを読み込んで折れ線グラフを表示
 
-import React from "react";
+// import React from "react";
 
-import axios from "axios";
+// import axios from "axios";
 
-import { BarFromApi, RadeaChart } from "../../components";
+// import { BarFromApi, RadeaChart } from "../../components";
 
-const Graph: React.FC = () => {
-  return (
-    <>
-      <BarFromApi user_id="1" />
-      <RadeaChart />
-    </>
-  );
-};
+// const Graph: React.FC = () => {
+//   return (
+//     <>
+//       <BarFromApi user_id="1" />
+//       <RadeaChart />
+//     </>
+//   );
+// };
 
-export default Graph;
+// export default Graph;
