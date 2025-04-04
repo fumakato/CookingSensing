@@ -1,6 +1,6 @@
 // src/SignUpForm.tsx
 import React, { useState } from "react";
-import { signUp } from "../../firebase_set/authService";
+import { signUp } from "./authService";
 
 const SignUpForm: React.FC = () => {
   const [email, setEmail] = useState<string>("");

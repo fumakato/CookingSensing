@@ -5,7 +5,7 @@ import { LineChart, VwToPx, HistogramVer2, BarChart } from "../../components";
 import axios from "axios";
 import { Paper, Grid } from "@mui/material";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../firebase_set/firebase";
+import { auth } from "../firebase/firebase";
 
 import { useRouter } from "next/router";
 
@@ -169,18 +169,16 @@ const Graph: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (uid !== "") {
-        try {
-          const response = await axios.post(
-            `${url}/users/search_user_by_firebase_auth_uid`,
-            {
-              firebase_auth_uid: uid,
-            }
-          ); // 必要なパラメータを指定
-          setIdNumber(response.data.id);
-        } catch (error) {
-          console.error("Error fetching data: ", error);
-        }
+      try {
+        const response = await axios.post(
+          `${url}/users/search_user_by_firebase_auth_uid`,
+          {
+            firebase_auth_uid: uid,
+          }
+        ); // 必要なパラメータを指定
+        setIdNumber(response.data.id);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
       }
     };
     fetchData();

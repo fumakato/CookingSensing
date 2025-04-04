@@ -1,6 +1,6 @@
 // SignInComponent.tsx
 import React from "react";
-import { signInWithGoogle, logout } from "../../firebase_set/firebase";
+import { signInWithGoogle, logout } from "./firebase";
 
 const SignInComponent: React.FC = () => {
   return (

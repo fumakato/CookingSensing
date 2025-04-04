@@ -3,7 +3,7 @@ import axios from "axios";
 import { Buffer } from "buffer";
 import { red } from "@mui/material/colors";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../firebase_set/firebase";
+import { auth } from "../firebase/firebase";
 import { useRouter } from "next/router";
 
 const App: React.FC = () => {
